@@ -201,12 +201,17 @@ export default function Servizi() {
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
-      const element = document.getElementById(id);
-      if (element) {
+      // Lo scroll va ritardato: le immagini delle sezioni si caricano dopo
+      // il primo render e spostano il layout. Riproviamo più volte.
+      const timers = [150, 500, 1000].map((delay) =>
         setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
-      }
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, delay)
+      );
+      return () => timers.forEach(clearTimeout);
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

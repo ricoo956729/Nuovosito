@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { Layout } from "@/components/layout/Layout";
 import Home from "@/pages/Home";
 import IlCentro from "@/pages/IlCentro";
@@ -11,7 +12,9 @@ import ArticoloTecarterapia from "@/pages/ArticoloTecarterapia";
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="il-centro" element={<IlCentro />} />
@@ -23,6 +26,7 @@ export default function App() {
         <Route path="articoli/tecarterapia-cos-e-benefici-quando-utile" element={<ArticoloTecarterapia />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }
