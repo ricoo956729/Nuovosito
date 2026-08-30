@@ -41,12 +41,15 @@ export default function ArticoloTecarterapia() {
           funzionale.
         </p>
 
-        <figure className="mt-8 overflow-hidden rounded-3xl shadow-lg ring-1 ring-border">
+        <figure className="mt-8 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-border">
           <img
-            src="/assets/terapie-strumentali/diatermia-1.webp"
-            alt="Seduta di tecarterapia presso FKT Matera"
-            className="w-full object-cover"
+            src="/assets/terapie-strumentali/tecarterapia-1.webp"
+            alt="Apparecchiatura per tecarterapia in uso presso FKT Matera"
+            className="h-72 w-full object-contain p-6 sm:h-96"
           />
+          <figcaption className="border-t border-border px-6 py-3 text-xs text-muted-foreground">
+            L'apparecchiatura per tecarterapia utilizzata presso il centro FKT Matera.
+          </figcaption>
         </figure>
 
         <H2>Cos'è la tecarterapia</H2>
