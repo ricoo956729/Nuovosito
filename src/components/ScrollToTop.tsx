@@ -1,0 +1,1 @@
+import { useEffect } from 'react' as React from 'react' is not needed for this, wait I need to check the import style used in the project. Let me check main.tsx and App.tsx imports. They use `import { StrictMode } from 'react'`. So I should use the same style. Let me write the component properly.
