@@ -22,11 +22,18 @@ export function NumeriDelCentro() {
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
           I numeri del centro FKT
         </p>
-        <div className="mt-8 grid grid-cols-2 gap-10 lg:grid-cols-4">
-          <Counter target={30} suffix="+" label="anni di esperienza" />
-          <Counter target={500} suffix=" mq" label="di superficie totale" />
-          <Counter target={30} suffix="+" label="prestazioni terapeutiche" />
-          <div className="text-center">
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4">
+          {/* Divisori morbidi: su mobile separano le 4 celle (2x2), su desktop restano solo quelli verticali */}
+          <div className="border-b border-r border-border/60 p-6 sm:p-8 lg:border-b-0">
+            <Counter target={30} suffix="+" label="anni di esperienza" />
+          </div>
+          <div className="border-b border-border/60 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <Counter target={500} suffix=" mq" label="di superficie totale" />
+          </div>
+          <div className="border-r border-border/60 p-6 sm:p-8">
+            <Counter target={30} suffix="+" label="prestazioni terapeutiche" />
+          </div>
+          <div className="p-6 text-center sm:p-8">
             <span className="block text-4xl sm:text-5xl font-extrabold text-blu font-[Manrope]">
               4,8<span className="text-azzurro">/5</span>
             </span>
