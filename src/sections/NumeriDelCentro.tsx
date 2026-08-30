@@ -22,18 +22,18 @@ export function NumeriDelCentro() {
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
           I numeri del centro FKT
         </p>
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4">
-          {/* Divisori morbidi: su mobile separano le 4 celle (2x2), su desktop restano solo quelli verticali */}
-          <div className="border-b border-r border-border/60 p-6 sm:p-8 lg:border-b-0">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-10">
+          {/* Su mobile ogni dato vive in una cella chiara e separata; su desktop la griglia resta pulita, senza divisori */}
+          <div className="rounded-2xl bg-ghiaccio p-5 sm:p-6 lg:rounded-none lg:bg-transparent lg:p-0">
             <Counter target={30} suffix="+" label="anni di esperienza" />
           </div>
-          <div className="border-b border-border/60 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+          <div className="rounded-2xl bg-ghiaccio p-5 sm:p-6 lg:rounded-none lg:bg-transparent lg:p-0">
             <Counter target={500} suffix=" mq" label="di superficie totale" />
           </div>
-          <div className="border-r border-border/60 p-6 sm:p-8">
+          <div className="rounded-2xl bg-ghiaccio p-5 sm:p-6 lg:rounded-none lg:bg-transparent lg:p-0">
             <Counter target={30} suffix="+" label="prestazioni terapeutiche" />
           </div>
-          <div className="p-6 text-center sm:p-8">
+          <div className="rounded-2xl bg-ghiaccio p-5 text-center sm:p-6 lg:rounded-none lg:bg-transparent lg:p-0">
             <span className="block text-4xl sm:text-5xl font-extrabold text-blu font-[Manrope]">
               4,8<span className="text-azzurro">/5</span>
             </span>
