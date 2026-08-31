@@ -227,6 +227,7 @@ export default function Servizi() {
           src="/assets/vitruviano-servizi-integrale.webp"
           alt=""
           aria-hidden="true"
+          decoding="async"
           className="pointer-events-none absolute -right-10 top-1/2 w-[240px] -translate-y-1/2 opacity-25 sm:w-[320px] lg:-right-8 lg:w-[480px] lg:opacity-30 xl:w-[560px]"
         />
         <div className="container-fkt relative py-16 sm:py-20">
@@ -273,6 +274,7 @@ export default function Servizi() {
                   src={area.immagine}
                   alt={area.immagineAlt}
                   loading="lazy"
+                  decoding="async"
                   className="h-64 sm:h-80 w-full object-cover"
                 />
               </figure>

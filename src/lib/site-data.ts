@@ -38,14 +38,14 @@ export const NAV = [
 ] as const;
 
 export const CONVENZIONI = [
-  { nome: "SSN — Servizio Sanitario Nazionale", logo: "/assets/logo-ssn-trasparente.png" },
-  { nome: "INAIL", logo: "/assets/logo-inail-trim.png" },
-  { nome: "FASDAC", logo: "/assets/convenzioni/logo-fasdac.png" },
-  { nome: "Generali", logo: "/assets/convenzioni/logo-generali-hd.png" },
-  { nome: "Poste Welfare Servizi", logo: "/assets/convenzioni/logo-poste-hd.png" },
-  { nome: "AXA", logo: "/assets/convenzioni/logo-axa-hd.png" },
-  { nome: "MyAssistance", logo: "/assets/convenzioni/logo-myassistance-hd.png" },
-  { nome: "Helpcard", logo: "/assets/convenzioni/logo-helpcard-hd.png" },
+  { nome: "SSN — Servizio Sanitario Nazionale", logo: "/assets/logo-ssn-trasparente-opt.webp" },
+  { nome: "INAIL", logo: "/assets/logo-inail-trim-opt.webp" },
+  { nome: "FASDAC", logo: "/assets/convenzioni/logo-fasdac-opt.webp" },
+  { nome: "Generali", logo: "/assets/convenzioni/logo-generali-hd-opt.webp" },
+  { nome: "Poste Welfare Servizi", logo: "/assets/convenzioni/logo-poste-hd-opt.webp" },
+  { nome: "AXA", logo: "/assets/convenzioni/logo-axa-hd-opt.webp" },
+  { nome: "MyAssistance", logo: "/assets/convenzioni/logo-myassistance-hd-opt.webp" },
+  { nome: "Helpcard", logo: "/assets/convenzioni/logo-helpcard-hd-opt.webp" },
 ] as const;
 
 export const AREE_SERVIZI = [

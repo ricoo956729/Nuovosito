@@ -52,6 +52,9 @@ export default function IlCentro() {
             <img
               src="/assets/sede-ingresso.webp"
               alt="Ingresso della sede FKT Matera con logo sulla vetrata"
+              width="1536"
+              height="1024"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           </figure>
@@ -103,6 +106,8 @@ export default function IlCentro() {
           src="/assets/sede-ingresso.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-blu/85" />

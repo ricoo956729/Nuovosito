@@ -122,17 +122,20 @@ export default function Contatti() {
             <img
               src="/assets/sede-ingresso.webp"
               alt="Ingresso della sede FKT Matera in Vico dei Peuceti 22"
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           </figure>
         </div>
 
         {/* Mappa */}
-        <div className="mt-6 overflow-hidden rounded-3xl shadow-xl ring-1 ring-border">
+        <div className="mt-6 overflow-hidden rounded-3xl shadow-xl ring-1 ring-border bg-ghiaccio">
           <iframe
             title="Mappa FKT Matera — Vico dei Peuceti 22, Matera"
             src={MAPS_EMBED}
-            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             className="h-[400px] w-full border-0"
           />

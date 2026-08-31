@@ -33,7 +33,7 @@ const ACCESSO: Accesso[] = [
     titolo: "Servizio Sanitario Nazionale",
     sottotitolo: "Prestazioni convenzionate con il SSN su prescrizione medica.",
     icona: Landmark,
-    logo: "/assets/logo-ssn-trasparente.png",
+    logo: "/assets/logo-ssn-trasparente-opt.webp",
     logoAlt: "Logo del Servizio Sanitario Nazionale",
     paragrafi: [
       "Questa modalità riguarda i pazienti in possesso di una prescrizione medica per prestazioni erogabili in convenzione. Prima della prenotazione è necessario verificare che l'indicazione sia completa e compatibile con il percorso richiesto.",
@@ -54,7 +54,7 @@ const ACCESSO: Accesso[] = [
     titolo: "INAIL",
     sottotitolo: "Riabilitazione dopo un infortunio sul lavoro.",
     icona: BriefcaseMedical,
-    logo: "/assets/logo-inail-trim.png",
+    logo: "/assets/logo-inail-trim-opt.webp",
     logoAlt: "Logo INAIL",
     paragrafi: [
       "Il percorso INAIL riguarda i lavoratori che necessitano di trattamenti riabilitativi collegati a un infortunio sul lavoro. L'obiettivo è favorire il recupero funzionale e accompagnare il ritorno alle attività quotidiane e lavorative.",
@@ -138,6 +138,7 @@ export default function Convenzioni() {
           src="/assets/vitruviano-servizi-integrale.webp"
           alt=""
           aria-hidden="true"
+          decoding="async"
           className="pointer-events-none absolute right-4 top-1/2 w-[220px] -translate-y-1/2 opacity-60 sm:right-8 sm:w-[300px] lg:right-12 lg:w-[400px] lg:opacity-70"
         />
         <div className="container-fkt relative py-16 sm:py-20">
@@ -168,6 +169,7 @@ export default function Convenzioni() {
               title={c.nome}
               className="h-12 sm:h-14 w-auto max-w-[180px] object-contain opacity-80 transition hover:opacity-100"
               loading="lazy"
+              decoding="async"
             />
           ))}
         </div>
@@ -180,6 +182,8 @@ export default function Convenzioni() {
           src="/assets/vitruviano-servizi-integrale.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute left-4 top-1/2 hidden w-[180px] -translate-y-1/2 opacity-30 sm:left-8 sm:block sm:w-[260px] lg:left-12 lg:w-[340px] lg:opacity-40"
         />
         <div className="container-fkt py-16 sm:py-20">
@@ -225,6 +229,7 @@ export default function Convenzioni() {
                           alt={a.logoAlt}
                           className="max-h-10 max-w-[8rem] object-contain"
                           loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-sm">
@@ -292,7 +297,7 @@ export default function Convenzioni() {
                     }`}
                   >
                     {a.logo ? (
-                      <img src={a.logo} alt={a.logoAlt} className="max-h-9 max-w-[6.5rem] object-contain" loading="lazy" />
+                      <img src={a.logo} alt={a.logoAlt} className="max-h-9 max-w-[6.5rem] object-contain" loading="lazy" decoding="async" />
                     ) : (
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
                         <Icona className="h-5 w-5 text-azzurro" />

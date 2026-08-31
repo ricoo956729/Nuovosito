@@ -45,6 +45,8 @@ export default function ArticoloTecarterapia() {
           <img
             src="/assets/terapie-strumentali/tecarterapia-1.webp"
             alt="Apparecchiatura per tecarterapia in uso presso FKT Matera"
+            loading="lazy"
+            decoding="async"
             className="h-72 w-full object-contain p-6 sm:h-96"
           />
           <figcaption className="border-t border-border px-6 py-3 text-xs text-muted-foreground">

@@ -66,6 +66,8 @@ export function TerapieGrid({ trattamenti, immagineArea }: Props) {
               <img
                 src={t.immagine ?? immagineArea}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -129,6 +131,7 @@ export function TerapieGrid({ trattamenti, immagineArea }: Props) {
                   <img
                     src={trattamenti[openIndex].immagine ?? immagineArea}
                     alt={trattamenti[openIndex].titolo}
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />

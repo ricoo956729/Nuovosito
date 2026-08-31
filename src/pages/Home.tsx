@@ -13,8 +13,14 @@ export default function Home() {
       <section className="relative overflow-hidden bg-ghiaccio">
         {/* foto trattamento: solo desktop */}
         <img
-          src="/assets/hero-trattamento-1.jpg"
+          src="/assets/hero-trattamento-1.webp"
+          srcSet="/assets/hero-trattamento-1-mobile.webp 768w, /assets/hero-trattamento-1.webp 1366w"
+          sizes="100vw"
           alt="Trattamento fisioterapico del rachide cervicale"
+          width="1366"
+          height="768"
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 hidden h-full w-full object-cover object-right sm:block"
         />
         {/* Overlay uniforme per leggibilità testo */}
@@ -100,6 +106,8 @@ export default function Home() {
                 <img
                   src={area.immagine}
                   alt={area.titolo}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
               </div>
@@ -138,6 +146,8 @@ export default function Home() {
                 <img
                   src={c.logo}
                   alt={c.nome}
+                  loading="lazy"
+                  decoding="async"
                   className="max-h-10 max-w-[140px] object-contain"
                 />
               </div>

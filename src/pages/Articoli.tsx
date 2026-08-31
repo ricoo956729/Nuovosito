@@ -36,6 +36,7 @@ export default function Articoli() {
               alt="Apparecchiatura per tecarterapia INDIBA in uso presso FKT Matera"
               className="h-64 w-full object-contain p-6 transition duration-500 group-hover:scale-105 md:h-full"
               loading="lazy"
+              decoding="async"
             />
             <span className="absolute left-4 top-4 rounded-full bg-blu px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
               In evidenza
