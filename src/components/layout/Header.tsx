@@ -27,7 +27,7 @@ export function Header() {
               to={item.href}
               className={({ isActive }) =>
                 cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
                   isActive
                     ? "bg-secondary text-blu"
                     : "text-foreground/80 hover:bg-secondary/60 hover:text-blu"
@@ -42,7 +42,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <a
             href={SITE.telefonoHref}
-            className="hidden md:inline-flex items-center gap-2 rounded-full bg-azzurro px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-azzurro px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:shadow-lg hover:brightness-110 hover:-translate-y-0.5"
           >
             <Phone className="h-4 w-4" />
             {SITE.telefono}

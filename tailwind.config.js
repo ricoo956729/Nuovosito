@@ -10,6 +10,12 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        /* Token brand FKT (abilitano varianti hover:, group-hover:, opacità /xx) */
+        blu: "hsl(var(--fkt-blu) / <alpha-value>)",
+        "blu-scuro": "hsl(var(--fkt-blu-scuro) / <alpha-value>)",
+        azzurro: "hsl(var(--fkt-azzurro) / <alpha-value>)",
+        "azzurro-chiaro": "hsl(var(--fkt-azzurro-chiaro) / <alpha-value>)",
+        ghiaccio: "hsl(var(--fkt-ghiaccio) / <alpha-value>)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

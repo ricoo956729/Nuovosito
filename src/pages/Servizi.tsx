@@ -316,8 +316,20 @@ export default function Servizi() {
       </section>
 
       {/* CTA finale */}
-      <section className="bg-blu text-white">
-        <div className="container-fkt py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <section
+        className="relative overflow-hidden bg-blu text-white"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, #082a4a 0%, #0d3a5c 50%, #082a4a 100%)'
+        }}
+      >
+        <div
+          aria-hidden="true"
+          className="absolute top-0 right-0 w-96 h-96 opacity-10"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)'
+          }}
+        />
+        <div className="container-fkt relative py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold">Non sai quale trattamento fa per te?</h2>
             <p className="mt-2 text-white/80">
@@ -327,7 +339,7 @@ export default function Servizi() {
           <div className="flex flex-col sm:flex-row gap-3">
             <a
               href={SITE.telefonoHref}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
             >
               <Phone className="h-4 w-4" /> {SITE.telefono}
             </a>

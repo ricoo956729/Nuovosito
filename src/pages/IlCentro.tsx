@@ -98,8 +98,15 @@ export default function IlCentro() {
       </section>
 
       {/* CTA finale */}
-      <section className="bg-blu text-white">
-        <div className="container-fkt py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <section className="relative overflow-hidden text-white">
+        <img
+          src="/assets/sede-ingresso.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-blu/85" />
+        <div className="container-fkt relative py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold">Vieni a trovarci in sede.</h2>
             <p className="mt-2 text-white/80">
@@ -108,7 +115,7 @@ export default function IlCentro() {
           </div>
           <Link
             to="/contatti"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
           >
             Contattaci <ArrowRight className="h-4 w-4" />
           </Link>
