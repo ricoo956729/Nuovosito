@@ -1,10 +1,29 @@
 import { Link } from "react-router";
-import { ArrowLeft, Phone } from "lucide-react";
+import { ArrowLeft, Phone, BookOpen, Check, List } from "lucide-react";
 import { Seo } from "@/components/Seo";
 import { SITE } from "@/lib/site-data";
+import { Reveal } from "@/components/Reveal";
 
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="mt-10 text-2xl font-extrabold text-blu">{children}</h2>;
+const INDICE = [
+  { id: "cos-e-la-tecarterapia", titolo: "Cos'è la tecarterapia" },
+  { id: "modalita-capacitiva-e-resistiva", titolo: "Modalità capacitiva e resistiva" },
+  { id: "benefici", titolo: "Quali benefici può offrire?" },
+  { id: "quando-puo-essere-utile", titolo: "Quando può essere utile la tecarterapia?" },
+  { id: "quando-evitare", titolo: "Quando evitare la tecarterapia?" },
+  { id: "tecarterapia-a-matera", titolo: "Tecarterapia a Matera: quando prenotare una valutazione" },
+];
+
+function vaiA(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function H2({ id, children }: { id?: string; children: React.ReactNode }) {
+  return (
+    <h2 id={id} className="mt-12 scroll-mt-24 text-2xl font-extrabold text-blu">
+      {children}
+      <span aria-hidden="true" className="dashed-divider mt-4 block max-w-[6rem]" />
+    </h2>
+  );
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="mt-6 text-lg font-bold text-blu">{children}</h3>;
@@ -21,40 +40,87 @@ export default function ArticoloTecarterapia() {
         description="Scopri cos'è la tecarterapia, come funziona, quali benefici può offrire e quando può essere utile in fisioterapia."
       />
 
-      <article className="container-fkt max-w-3xl py-14 sm:py-20">
-        <Link
-          to="/articoli"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-azzurro hover:underline"
-        >
-          <ArrowLeft className="h-4 w-4" /> Tutti gli articoli
-        </Link>
+      {/* Testata editoriale */}
+      <section
+        className="relative overflow-hidden border-b border-border"
+        style={{ background: "linear-gradient(165deg, #eef4f8 0%, #f7fafc 55%, #ffffff 100%)" }}
+      >
+        <img
+          src="/assets/vitruviano-servizi-integrale.webp"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          className="pointer-events-none absolute -right-14 top-1/2 w-[200px] -translate-y-1/2 opacity-[0.12] sm:-right-8 sm:w-[280px] lg:right-8 lg:w-[360px] lg:opacity-[0.2] [mask-image:linear-gradient(to_left,black_55%,transparent_98%)]"
+        />
+        <div className="container-fkt relative max-w-3xl py-14 sm:py-20">
+          <Link
+            to="/articoli"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-azzurro hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" /> Tutti gli articoli
+          </Link>
 
-        <span className="mt-6 inline-block rounded-full bg-secondary px-4 py-1 text-xs font-semibold uppercase tracking-wide text-azzurro">
-          Terapie strumentali
-        </span>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-extrabold text-blu leading-tight">
-          Tecarterapia: cos'è, benefici e quando può essere utile
-        </h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          La tecarterapia, spesso chiamata TECAR, è una terapia fisica utilizzata in fisioterapia
-          come supporto nei percorsi dedicati a dolore, rigidità, traumi, tendinopatie e recupero
-          funzionale.
-        </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <span className="inline-block rounded-full bg-white px-4 py-1 text-xs font-semibold uppercase tracking-wide text-azzurro shadow-sm ring-1 ring-border">
+              Terapie strumentali
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <BookOpen className="h-3.5 w-3.5" /> Lettura: 5 minuti
+            </span>
+          </div>
+          <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold text-blu leading-[1.1]">
+            Tecarterapia: cos'è, benefici e quando può essere utile
+          </h1>
+          <p className="mt-5 text-lg text-muted-foreground">
+            La tecarterapia, spesso chiamata TECAR, è una terapia fisica utilizzata in fisioterapia
+            come supporto nei percorsi dedicati a dolore, rigidità, traumi, tendinopatie e recupero
+            funzionale.
+          </p>
+        </div>
+      </section>
 
-        <figure className="mt-8 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-border">
-          <img
-            src="/assets/terapie-strumentali/tecarterapia-1.webp"
-            alt="Apparecchiatura per tecarterapia in uso presso FKT Matera"
-            loading="lazy"
-            decoding="async"
-            className="h-72 w-full object-contain p-6 sm:h-96"
-          />
-          <figcaption className="border-t border-border px-6 py-3 text-xs text-muted-foreground">
-            L'apparecchiatura per tecarterapia utilizzata presso il centro FKT Matera.
-          </figcaption>
-        </figure>
+      <article className="container-fkt max-w-3xl py-14 sm:py-16">
+        <Reveal>
+          <figure className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-border">
+            <img
+              src="/assets/terapie-strumentali/tecarterapia-1.webp"
+              alt="Apparecchiatura per tecarterapia in uso presso FKT Matera"
+              loading="lazy"
+              decoding="async"
+              className="h-72 w-full object-cover object-center sm:h-96"
+            />
+            <figcaption className="border-t border-border bg-white px-6 py-3 text-xs text-muted-foreground">
+              L'apparecchiatura per tecarterapia utilizzata presso il centro FKT Matera.
+            </figcaption>
+          </figure>
+        </Reveal>
 
-        <H2>Cos'è la tecarterapia</H2>
+        {/* Indice dei contenuti */}
+        <Reveal delay={1}>
+          <nav aria-label="Indice dell'articolo" className="mt-10 rounded-2xl bg-ghiaccio p-6 sm:p-7">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-azzurro">
+              <List className="h-4 w-4" /> In questo articolo
+            </p>
+            <ol className="mt-4 divide-y divide-dashed divide-border">
+              {INDICE.map((voce, i) => (
+                <li key={voce.id}>
+                  <button
+                    type="button"
+                    onClick={() => vaiA(voce.id)}
+                    className="group flex w-full items-baseline gap-3 py-2.5 text-left text-sm font-semibold text-blu transition-colors hover:text-azzurro"
+                  >
+                    <span className="font-mono text-xs text-azzurro/70" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {voce.titolo}
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </Reveal>
+
+        <H2 id="cos-e-la-tecarterapia">Cos'è la tecarterapia</H2>
         <P>
           La tecarterapia è una terapia elettromedicale che sfrutta il trasferimento di energia ai
           tessuti biologici attraverso una radiofrequenza. L'obiettivo è stimolare una risposta
@@ -68,7 +134,7 @@ export default function ArticoloTecarterapia() {
           all'obiettivo terapeutico.
         </P>
 
-        <H2>Modalità capacitiva e resistiva</H2>
+        <H2 id="modalita-capacitiva-e-resistiva">Modalità capacitiva e resistiva</H2>
         <P>
           La TECAR può essere utilizzata in modalità capacitiva o resistiva. La scelta dipende dal
           tipo di tessuto da trattare e dall'obiettivo della seduta.
@@ -87,13 +153,13 @@ export default function ArticoloTecarterapia() {
           muscolo-scheletrico.
         </P>
 
-        <H2>Quali benefici può offrire?</H2>
+        <H2 id="benefici">Quali benefici può offrire?</H2>
         <P>
           I benefici della tecarterapia possono variare da persona a persona e dipendono dalla
           condizione trattata, dalla fase del disturbo e dal modo in cui il trattamento viene
           integrato nel percorso fisioterapico.
         </P>
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
           {[
             "Riduzione del dolore.",
             "Miglioramento della mobilità.",
@@ -102,8 +168,13 @@ export default function ArticoloTecarterapia() {
             "Preparazione dei tessuti al lavoro manuale o agli esercizi terapeutici.",
             "Supporto nei percorsi di rieducazione funzionale.",
           ].map((b) => (
-            <li key={b} className="flex gap-2 text-foreground/80">
-              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-azzurro" aria-hidden="true" />
+            <li
+              key={b}
+              className="flex items-start gap-3 rounded-xl bg-ghiaccio px-4 py-3 text-sm text-foreground/85"
+            >
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-azzurro/15">
+                <Check className="h-3 w-3 text-azzurro" strokeWidth={3} />
+              </span>
               {b}
             </li>
           ))}
@@ -114,7 +185,7 @@ export default function ArticoloTecarterapia() {
           rieducazione del movimento.
         </P>
 
-        <H2>Quando può essere utile la tecarterapia?</H2>
+        <H2 id="quando-puo-essere-utile">Quando può essere utile la tecarterapia?</H2>
         <P>
           La tecarterapia può essere presa in considerazione in diverse situazioni cliniche, sempre
           dopo valutazione professionale. Non tutte le condizioni dolorose richiedono TECAR e non
@@ -160,7 +231,7 @@ export default function ArticoloTecarterapia() {
           percorso.
         </P>
 
-        <H2>Quando evitare la tecarterapia?</H2>
+        <H2 id="quando-evitare">Quando evitare la tecarterapia?</H2>
         <P>
           La TECAR non è indicata in tutte le situazioni. Prima del trattamento è importante
           informare il fisioterapista in presenza di pacemaker o dispositivi elettronici impiantati,
@@ -168,7 +239,7 @@ export default function ArticoloTecarterapia() {
           oncologiche in corso o recenti, febbre, protesi o mezzi di sintesi nella zona interessata.
         </P>
 
-        <H2>Tecarterapia a Matera: quando prenotare una valutazione</H2>
+        <H2 id="tecarterapia-a-matera">Tecarterapia a Matera: quando prenotare una valutazione</H2>
         <P>
           Se hai dolore muscolare o articolare, rigidità, una tendinopatia, un trauma recente o un
           disturbo che limita il movimento, la tecarterapia può essere una possibilità da valutare
@@ -180,21 +251,31 @@ export default function ArticoloTecarterapia() {
           e come integrarla nel percorso più adatto.
         </P>
 
-        <div className="mt-12 rounded-3xl bg-blu p-8 text-white sm:flex sm:items-center sm:justify-between sm:gap-6">
-          <div>
-            <h2 className="text-xl font-extrabold">Hai dolore o difficoltà nei movimenti?</h2>
-            <p className="mt-2 text-sm text-white/80">
-              Prenota una valutazione fisioterapica presso FKT e scopri se la tecarterapia può
-              essere utile nel tuo percorso.
-            </p>
-          </div>
-          <a
-            href={SITE.telefonoHref}
-            className="mt-5 sm:mt-0 inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
+        <Reveal>
+          <div
+            className="relative mt-14 overflow-hidden rounded-3xl p-8 text-white sm:flex sm:items-center sm:justify-between sm:gap-6"
+            style={{ backgroundImage: "linear-gradient(135deg, #082a4a 0%, #0d3a5c 55%, #082a4a 100%)" }}
           >
-            <Phone className="h-4 w-4" /> Prenota una valutazione
-          </a>
-        </div>
+            <div
+              aria-hidden="true"
+              className="absolute -right-16 -top-16 h-56 w-56"
+              style={{ background: "radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%)" }}
+            />
+            <div className="relative">
+              <h2 className="text-xl font-extrabold">Hai dolore o difficoltà nei movimenti?</h2>
+              <p className="mt-2 text-sm text-white/80">
+                Prenota una valutazione fisioterapica presso FKT e scopri se la tecarterapia può
+                essere utile nel tuo percorso.
+              </p>
+            </div>
+            <a
+              href={SITE.telefonoHref}
+              className="relative mt-5 sm:mt-0 inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
+            >
+              <Phone className="h-4 w-4" /> Prenota una valutazione
+            </a>
+          </div>
+        </Reveal>
       </article>
     </>
   );

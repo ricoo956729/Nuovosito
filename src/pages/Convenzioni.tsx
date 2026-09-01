@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import { SITE, CONVENZIONI } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
+import { CornerBrackets } from "@/components/CornerBrackets";
 
 
 type Accesso = {
@@ -132,74 +135,60 @@ export default function Convenzioni() {
     <>
       <Seo title="Convenzioni | FKT Matera" description="FKT Matera è convenzionato con SSN, INAIL e le principali assicurazioni e fondi sanitari: scopri iter e documenti per accedere alle cure." />
       {/* Intestazione pagina */}
-      <section className="relative overflow-hidden bg-ghiaccio border-b border-border">
-        {/* Vitruviano — simbolo identitario FKT, intero e visibile */}
-        <img
-          src="/assets/vitruviano-servizi-integrale.webp"
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-          className="pointer-events-none absolute right-4 top-1/2 w-[220px] -translate-y-1/2 opacity-60 sm:right-8 sm:w-[300px] lg:right-12 lg:w-[400px] lg:opacity-70"
-        />
-        <div className="container-fkt relative py-16 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">Convenzioni</p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl font-extrabold text-blu">
-            Accesso alle cure, in convenzione.
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Il centro è convenzionato con il Servizio Sanitario Nazionale, con l'INAIL e con le
-            principali assicurazioni e fondi sanitari, per rendere i percorsi riabilitativi più
-            accessibili.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        label="Convenzioni"
+        title="Accesso alle cure, in convenzione."
+        subtitle="Il centro è convenzionato con il Servizio Sanitario Nazionale, con l'INAIL e con le principali assicurazioni e fondi sanitari, per rendere i percorsi riabilitativi più accessibili."
+      />
 
       {/* Le nostre convenzioni */}
       <section className="container-fkt py-16 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Le nostre convenzioni</h2>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Enti, assicurazioni e fondi con cui il centro collabora per l'accesso alle prestazioni.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
-          {CONVENZIONI.map((c) => (
-            <img
-              key={c.nome}
-              src={c.logo}
-              alt={`Logo ${c.nome}`}
-              title={c.nome}
-              className="h-12 sm:h-14 w-auto max-w-[180px] object-contain opacity-80 transition hover:opacity-100"
-              loading="lazy"
-              decoding="async"
-            />
+        <Reveal>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Le nostre convenzioni</h2>
+          <p className="mt-3 max-w-2xl text-muted-foreground">
+            Enti, assicurazioni e fondi con cui il centro collabora per l'accesso alle prestazioni.
+          </p>
+          <div className="dashed-divider mt-6 max-w-xs" aria-hidden="true" />
+        </Reveal>
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {CONVENZIONI.map((c, i) => (
+            <Reveal key={c.nome} delay={(i % 4) as 0 | 1 | 2 | 3}>
+              <div
+                className="hover-lift flex h-24 items-center justify-center rounded-2xl bg-white px-6 shadow-sm ring-1 ring-border"
+                title={c.nome}
+              >
+                <img
+                  src={c.logo}
+                  alt={`Logo ${c.nome}`}
+                  className="max-h-11 w-auto max-w-[150px] object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* Come accedere alle cure */}
       <section className="relative overflow-hidden bg-white border-y border-border">
-        {/* Vitruviano — accesso cure */}
-        <img
-          src="/assets/vitruviano-servizi-integrale.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="pointer-events-none absolute left-4 top-1/2 hidden w-[180px] -translate-y-1/2 opacity-30 sm:left-8 sm:block sm:w-[260px] lg:left-12 lg:w-[340px] lg:opacity-40"
-        />
         <div className="container-fkt py-16 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
-            Iter e documenti
-          </p>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
-            Come accedere alle cure
-          </h2>
-          <p className="mt-3 max-w-2xl text-muted-foreground">
-            Le tre modalità di accesso alle prestazioni, con i passaggi e i documenti utili per
-            ciascun percorso.
-          </p>
-          <p className="mt-6 text-sm font-semibold text-blu">
-            Seleziona la tua modalità di accesso per scoprire l'iter completo.
-          </p>
+          <Reveal>
+            <p className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
+              <span aria-hidden="true" className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-azzurro" />
+              Iter e documenti
+            </p>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+              Come accedere alle cure
+            </h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Le tre modalità di accesso alle prestazioni, con i passaggi e i documenti utili per
+              ciascun percorso.
+            </p>
+            <p className="mt-6 text-sm font-semibold text-blu">
+              Seleziona la tua modalità di accesso per scoprire l'iter completo.
+            </p>
+          </Reveal>
 
           <div className="mt-6 grid gap-6 lg:hidden">
             {ACCESSO.map((a) => {
@@ -280,7 +269,7 @@ export default function Convenzioni() {
           {/* Versione desktop: selettore a schede + pannello dettagli */}
           <div className="mt-6 hidden lg:block">
             <div className="grid grid-cols-3 gap-6" role="tablist" aria-label="Modalità di accesso">
-              {ACCESSO.map((a) => {
+              {ACCESSO.map((a, i) => {
                 const Icona = a.icona;
                 const isOpen = aperta === a.slug;
                 return (
@@ -290,29 +279,32 @@ export default function Convenzioni() {
                     role="tab"
                     aria-selected={isOpen}
                     onClick={() => setAperta(isOpen ? null : a.slug)}
-                    className={`flex items-center gap-4 rounded-2xl bg-ghiaccio p-5 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#2279b0] focus-visible:ring-offset-2 ${
+                    className={`flex flex-col rounded-2xl bg-ghiaccio p-6 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#2279b0] focus-visible:ring-offset-2 ${
                       isOpen
                         ? "shadow-xl ring-2 ring-[#2279b0]"
                         : "shadow-sm ring-1 ring-border hover:shadow-md hover:ring-[#2279b0]/40"
                     }`}
                   >
-                    {a.logo ? (
-                      <img src={a.logo} alt={a.logoAlt} className="max-h-9 max-w-[6.5rem] object-contain" loading="lazy" decoding="async" />
-                    ) : (
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
-                        <Icona className="h-5 w-5 text-azzurro" />
+                    <div className="flex items-center justify-between gap-4">
+                      {a.logo ? (
+                        <img src={a.logo} alt={a.logoAlt} className="max-h-9 max-w-[6.5rem] object-contain" loading="lazy" decoding="async" />
+                      ) : (
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+                          <Icona className="h-5 w-5 text-azzurro" />
+                        </span>
+                      )}
+                      <span className="font-mono text-xs tracking-[0.25em] text-azzurro/70" aria-hidden="true">
+                        {String(i + 1).padStart(2, "0")}
                       </span>
-                    )}
-                    <span className="min-w-0">
-                      <span className="block truncate font-extrabold text-blu">{a.titolo}</span>
-                      <span className="mt-0.5 block text-xs font-semibold text-azzurro">
-                        {isOpen ? "Nascondi l'iter" : "Scopri l'iter"}
-                      </span>
+                    </div>
+                    <span className="mt-4 block font-extrabold text-blu leading-snug">{a.titolo}</span>
+                    <span className="mt-2 flex items-center justify-between gap-2 text-xs font-semibold text-azzurro">
+                      {isOpen ? "Nascondi l'iter" : "Scopri l'iter"}
+                      <ChevronDown
+                        className={`h-4 w-4 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                        aria-hidden="true"
+                      />
                     </span>
-                    <ChevronDown
-                      className={`ml-auto h-5 w-5 shrink-0 text-azzurro transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                      aria-hidden="true"
-                    />
                   </button>
                 );
               })}
@@ -334,9 +326,11 @@ export default function Convenzioni() {
           </div>
 
           {/* Nota informativa */}
-          <div className="mt-10 flex flex-col gap-3 rounded-2xl bg-ghiaccio p-6 sm:flex-row sm:items-center sm:gap-5 sm:p-8">
-            <Info className="h-6 w-6 shrink-0 text-azzurro" />
-            <p className="text-sm leading-relaxed text-foreground/80">
+          <Reveal>
+            <div className="relative mt-10 flex flex-col gap-3 rounded-2xl bg-ghiaccio p-6 sm:flex-row sm:items-center sm:gap-5 sm:p-8">
+              <CornerBrackets />
+              <Info className="h-6 w-6 shrink-0 text-azzurro" />
+              <p className="text-sm leading-relaxed text-foreground/80">
               Le condizioni di accesso possono variare in base all'ente o alla compagnia di
               riferimento. Per verificare la tua copertura o la tua pratica, contatta la segreteria
               al numero{" "}
@@ -351,8 +345,9 @@ export default function Convenzioni() {
                 {SITE.email}
               </a>
               .
-            </p>
-          </div>
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 

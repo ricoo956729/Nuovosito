@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import { Mail, ArrowRight, Send } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 
 
 const PROFILI = [
@@ -50,21 +52,11 @@ export default function LavoraConNoi() {
     <>
       <Seo title="Lavora con noi | FKT Matera" description="Candidati per collaborare con il centro FKT Matera: fisioterapisti, medici specialisti, osteopati e personale amministrativo." />
       {/* Intestazione pagina */}
-      <section className="bg-ghiaccio border-b border-border">
-        <div className="container-fkt py-16 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
-            Lavora con noi
-          </p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl font-extrabold text-blu">
-            Cresci con il centro FKT.
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Siamo sempre interessati a conoscere professionisti motivati da inserire nel nostro
-            team. Se condividi il nostro approccio alla riabilitazione, candidati: valutiamo ogni
-            profilo con attenzione.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        label="Lavora con noi"
+        title="Cresci con il centro FKT."
+        subtitle="Siamo sempre interessati a conoscere professionisti motivati da inserire nel nostro team. Se condividi il nostro approccio alla riabilitazione, candidati: valutiamo ogni profilo con attenzione."
+      />
 
       {/* Form candidatura */}
       <section className="container-fkt py-16 sm:py-20">
@@ -78,9 +70,10 @@ export default function LavoraConNoi() {
             pronta per la segreteria. Ricorda di allegare il CV aggiornato.
           </p>
 
+          <Reveal>
           <form
             onSubmit={invia}
-            className="mt-8 rounded-3xl bg-white p-6 sm:p-8 shadow-sm ring-1 ring-border space-y-5"
+            className="mt-8 rounded-3xl bg-white p-6 sm:p-8 shadow-xl shadow-blu/5 ring-1 ring-border space-y-5"
           >
             <div>
               <label htmlFor="nome" className="mb-1.5 block text-sm font-semibold text-blu">
@@ -158,6 +151,7 @@ export default function LavoraConNoi() {
               salvato su questo sito.
             </p>
           </form>
+          </Reveal>
         </div>
       </section>
 
@@ -172,17 +166,22 @@ export default function LavoraConNoi() {
               <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
                 Tre semplici passaggi.
               </h2>
-              <ol className="mt-6 space-y-4">
+              <ol className="relative mt-8 space-y-8">
+                {/* Linea di collegamento tratteggiata */}
+                <span
+                  aria-hidden="true"
+                  className="absolute left-[19px] top-2 bottom-2 border-l-2 border-dashed border-azzurro/40"
+                />
                 {[
                   "Compila il modulo di candidatura indicando il profilo più adatto.",
                   "All'invio si apre il tuo client di posta: allega il CV aggiornato e una breve presentazione.",
                   "Se il profilo è in linea con le esigenze del centro, ti ricontatteremo per un colloquio conoscitivo.",
                 ].map((passo, i) => (
-                  <li key={i} className="flex gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ghiaccio font-extrabold text-azzurro font-[Manrope]">
+                  <li key={i} className="relative flex gap-5">
+                    <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-azzurro font-extrabold text-white shadow-md shadow-azzurro/30 font-[Manrope]">
                       {i + 1}
                     </span>
-                    <p className="text-foreground/80 pt-1">{passo}</p>
+                    <p className="text-foreground/80 pt-2">{passo}</p>
                   </li>
                 ))}
               </ol>

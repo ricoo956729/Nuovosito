@@ -3,6 +3,8 @@ import { ArrowRight, Phone, Landmark, BriefcaseMedical, ShieldCheck } from "luci
 import { SITE, MODALITA_ACCESSO } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
 import { TerapieGrid } from "@/components/terapie/TerapieGrid";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 import { useEffect } from "react";
 
 type Trattamento = { titolo: string; descrizione: string; immagine: string };
@@ -221,34 +223,21 @@ export default function Servizi() {
     <>
       <Seo title="Servizi e prestazioni | FKT Matera" description="Terapie manuali, terapie strumentali e visite fisiatriche a Matera: scopri le prestazioni del centro FKT." />
       {/* Intestazione pagina */}
-      <section className="relative overflow-hidden bg-ghiaccio border-b border-border">
-        {/* Vitruviano decorativo */}
-        <img
-          src="/assets/vitruviano-servizi-integrale.webp"
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-          className="pointer-events-none absolute -right-10 top-1/2 w-[240px] -translate-y-1/2 opacity-25 sm:w-[320px] lg:-right-8 lg:w-[480px] lg:opacity-30 xl:w-[560px]"
-        />
-        <div className="container-fkt relative py-16 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">Servizi</p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl font-extrabold text-blu">
-            Le prestazioni del centro FKT.
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Terapie manuali, terapie strumentali e visite fisiatriche: tre aree di intervento
-            coordinate in un unico percorso di cura.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        label="Servizi"
+        title="Le prestazioni del centro FKT."
+        subtitle="Terapie manuali, terapie strumentali e visite fisiatriche: tre aree di intervento coordinate in un unico percorso di cura."
+      />
 
       {/* Intro approccio */}
       <section className="container-fkt py-14 sm:py-16">
+        <Reveal>
         <p className="max-w-3xl text-lg text-foreground/80 leading-relaxed">
           Ogni percorso inizia da una valutazione accurata della persona: ascoltiamo la storia
           clinica, analizziamo il movimento e definiamo insieme gli obiettivi. Da qui costruiamo un
           piano di trattamento personalizzato, aggiornato passo dopo passo in base ai progressi.
         </p>
+        </Reveal>
       </section>
 
       {/* Aree di servizio */}
@@ -259,26 +248,32 @@ export default function Servizi() {
           className={"scroll-mt-24 border-t border-border " + (i % 2 === 0 ? "bg-white" : "bg-ghiaccio")}
         >
           <div className="container-fkt py-16 sm:py-20">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">{area.titolo}</h2>
-                <p className="mt-4 text-foreground/80 leading-relaxed">{area.descrizione}</p>
+            <Reveal>
+              <div className="grid items-center gap-10 lg:grid-cols-2">
+                <div className={i % 2 === 1 ? "lg:order-2" : ""}>
+                  <p className="font-mono text-xs uppercase tracking-[0.3em] text-azzurro">
+                    Area {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">{area.titolo}</h2>
+                  <div className="dashed-divider mt-5 max-w-[8rem]" aria-hidden="true" />
+                  <p className="mt-4 text-foreground/80 leading-relaxed">{area.descrizione}</p>
+                </div>
+                <figure
+                  className={
+                    "overflow-hidden rounded-3xl shadow-xl ring-1 ring-border " +
+                    (i % 2 === 1 ? "lg:order-1" : "")
+                  }
+                >
+                  <img
+                    src={area.immagine}
+                    alt={area.immagineAlt}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-64 sm:h-80 w-full object-cover"
+                  />
+                </figure>
               </div>
-              <figure
-                className={
-                  "overflow-hidden rounded-3xl shadow-xl ring-1 ring-border " +
-                  (i % 2 === 1 ? "lg:order-1" : "")
-                }
-              >
-                <img
-                  src={area.immagine}
-                  alt={area.immagineAlt}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-64 sm:h-80 w-full object-cover"
-                />
-              </figure>
-            </div>
+            </Reveal>
 
             <TerapieGrid
               trattamenti={area.trattamenti}
@@ -292,19 +287,25 @@ export default function Servizi() {
       {/* Come accedere */}
       <section className="border-t border-border bg-white">
         <div className="container-fkt py-16 sm:py-20">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Come accedere alle prestazioni</h2>
-          <p className="mt-3 max-w-2xl text-muted-foreground">
-            Il centro è convenzionato e offre diverse modalità di accesso alle cure.
-          </p>
+          <Reveal>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Come accedere alle prestazioni</h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Il centro è convenzionato e offre diverse modalità di accesso alle cure.
+            </p>
+          </Reveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {MODALITA_ACCESSO.map((m, i) => {
               const Icona = ICONE_ACCESSO[i] ?? Landmark;
               return (
-                <div key={m.slug} className="rounded-2xl bg-ghiaccio p-6">
-                  <Icona className="h-6 w-6 text-azzurro" />
-                  <h3 className="mt-3 font-bold text-blu">{m.titolo}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{m.descrizione}</p>
-                </div>
+                <Reveal key={m.slug} delay={(i % 3) as 0 | 1 | 2}>
+                  <div className="hover-lift h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ghiaccio">
+                      <Icona className="h-5 w-5 text-azzurro" />
+                    </span>
+                    <h3 className="mt-4 font-bold text-blu">{m.titolo}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{m.descrizione}</p>
+                  </div>
+                </Reveal>
               );
             })}
           </div>

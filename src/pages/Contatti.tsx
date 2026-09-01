@@ -1,6 +1,9 @@
-import { Phone, MessageCircle, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Phone, MessageCircle, Mail, MapPin, Clock, ExternalLink, Navigation } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 
 
 const MAPS_URL =
@@ -8,30 +11,80 @@ const MAPS_URL =
 const MAPS_EMBED =
   "https://www.google.com/maps?q=Vico%20dei%20Peuceti%2022%2C%2075100%20Matera&output=embed";
 
+/** Mappa con fallback elegante: se l'embed non si carica, resta una card curata con CTA a Google Maps. */
+function MappaSede() {
+  const [caricata, setCaricata] = useState(false);
+  const [fallita, setFallita] = useState(false);
+
+  useEffect(() => {
+    if (caricata) return;
+    const timer = setTimeout(() => setFallita(true), 8000);
+    return () => clearTimeout(timer);
+  }, [caricata]);
+
+  return (
+    <div className="relative mt-6 h-[400px] overflow-hidden rounded-3xl shadow-xl ring-1 ring-border">
+      {/* Fallback visivo sotto l'iframe */}
+      <div className="absolute inset-0">
+        <img
+          src="/assets/sede-ingresso.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-blu/80" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center text-white">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/25">
+            <Navigation className="h-5 w-5" />
+          </span>
+          <p className="text-lg font-extrabold font-[Manrope]">
+            {SITE.indirizzo.via}, {SITE.indirizzo.cap} {SITE.indirizzo.citta} ({SITE.indirizzo.provincia})
+          </p>
+          <p className="text-sm text-white/70">La mappa interattiva non è disponibile in questo momento.</p>
+          <a
+            href={MAPS_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-blu transition hover:bg-azzurro hover:text-white"
+          >
+            Apri su Google Maps <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+      {!fallita && (
+        <iframe
+          title="Mappa FKT Matera — Vico dei Peuceti 22, Matera"
+          src={MAPS_EMBED}
+          referrerPolicy="no-referrer-when-downgrade"
+          loading="lazy"
+          onLoad={() => setCaricata(true)}
+          className={`absolute inset-0 h-full w-full border-0 transition-opacity duration-500 ${caricata ? "opacity-100" : "opacity-0"}`}
+        />
+      )}
+    </div>
+  );
+}
+
 export default function Contatti() {
   return (
     <>
       <Seo title="Contatti | FKT Matera" description="Contatta FKT Matera: telefono 0835 389079, WhatsApp, email segreteria, orari e mappa della sede in Vico dei Peuceti 22." />
       {/* Intestazione pagina */}
-      <section className="bg-ghiaccio border-b border-border">
-        <div className="container-fkt py-16 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">Contatti</p>
-          <h1 className="mt-3 max-w-2xl text-4xl sm:text-5xl font-extrabold text-blu">
-            Prenota una valutazione o chiedi informazioni.
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Contattaci per ricevere informazioni, prenotare una valutazione o capire quale modalità
-            di accesso è più adatta alle tue esigenze: privata, SSN, INAIL o assicurativa.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        label="Contatti"
+        title="Prenota una valutazione o chiedi informazioni."
+        subtitle="Contattaci per ricevere informazioni, prenotare una valutazione o capire quale modalità di accesso è più adatta alle tue esigenze: privata, SSN, INAIL o assicurativa."
+      />
 
       {/* Canali di contatto */}
       <section className="container-fkt py-16 sm:py-20">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal>
           <a
             href={SITE.telefonoHref}
-            className="group rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border transition hover:shadow-lg hover:ring-[#2279b0]/50"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
               <Phone className="h-6 w-6 text-azzurro" />
@@ -42,12 +95,14 @@ export default function Contatti() {
               La segreteria risponde negli orari di apertura.
             </p>
           </a>
+          </Reveal>
 
+          <Reveal delay={1}>
           <a
             href={SITE.whatsappHref}
             target="_blank"
             rel="noreferrer"
-            className="group rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border transition hover:shadow-lg hover:ring-[#2279b0]/50"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
               <MessageCircle className="h-6 w-6 text-azzurro" />
@@ -58,10 +113,12 @@ export default function Contatti() {
               Il modo più rapido per informazioni e disponibilità.
             </p>
           </a>
+          </Reveal>
 
+          <Reveal delay={2} className="sm:col-span-2 lg:col-span-1">
           <a
             href={`mailto:${SITE.email}`}
-            className="group rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border transition hover:shadow-lg hover:ring-[#2279b0]/50 sm:col-span-2 lg:col-span-1"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
               <Mail className="h-6 w-6 text-azzurro" />
@@ -72,9 +129,11 @@ export default function Contatti() {
               Per inviare prescrizioni, referti e documentazione.
             </p>
           </a>
+          </Reveal>
         </div>
 
         {/* Indirizzo + orari + foto ingresso */}
+        <Reveal>
         <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
           <div className="rounded-3xl bg-ghiaccio p-8">
             <div className="flex items-start gap-4">
@@ -130,16 +189,12 @@ export default function Contatti() {
             />
           </figure>
         </div>
+        </Reveal>
 
         {/* Mappa */}
-        <div className="mt-6 overflow-hidden rounded-3xl shadow-xl ring-1 ring-border bg-ghiaccio">
-          <iframe
-            title="Mappa FKT Matera — Vico dei Peuceti 22, Matera"
-            src={MAPS_EMBED}
-            referrerPolicy="no-referrer-when-downgrade"
-            className="h-[400px] w-full border-0"
-          />
-        </div>
+        <Reveal>
+          <MappaSede />
+        </Reveal>
       </section>
     </>
   );

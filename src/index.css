@@ -128,3 +128,51 @@
   opacity: 1;
   transform: translateY(0);
 }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+
+/* Punto pulsante ambientale per le label di pagina/sezione */
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 hsl(var(--fkt-azzurro) / 0.45); }
+  70% { box-shadow: 0 0 0 8px hsl(var(--fkt-azzurro) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--fkt-azzurro) / 0); }
+}
+.pulse-dot { animation: pulse-dot 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+/* Hover lift uniforme: -2px + shadow pop morbida */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -12px hsl(var(--fkt-blu) / 0.28);
+}
+
+/* Divisore tratteggiato "da disegno tecnico" */
+.dashed-divider {
+  height: 1px;
+  background-image: linear-gradient(to right, hsl(var(--border)) 45%, transparent 45%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+}
+
+/* Scroll morbido per gli anchor (indice articolo, sezioni servizi) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Rispetto delle preferenze di movimento ridotto */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .pulse-dot { animation: none; }
+  .hover-lift, .hover-lift:hover {
+    transition: none;
+    transform: none;
+  }
+}
