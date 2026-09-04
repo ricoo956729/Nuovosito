@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
 import {
-  ArrowRight,
-  Phone,
   Landmark,
   BriefcaseMedical,
   ShieldCheck,
@@ -12,6 +9,7 @@ import {
 } from "lucide-react";
 import { SITE, CONVENZIONI } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { CtaBand } from "@/components/CtaBand";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CornerBrackets } from "@/components/CornerBrackets";
@@ -104,7 +102,7 @@ function DettaglioAccesso({ a }: { a: Accesso }) {
         ))}
       </div>
 
-      <div className="mt-6 rounded-xl bg-white p-5 shadow-sm">
+      <div className="mt-6 rounded-xl bg-white p-5 shadow-fkt-1">
         <h4 className="flex items-center gap-2 text-sm font-bold text-blu">
           <FileText className="h-4 w-4 text-azzurro" /> {a.documentiTitolo}
         </h4>
@@ -141,10 +139,11 @@ export default function Convenzioni() {
         subtitle="Il centro è convenzionato con il Servizio Sanitario Nazionale, con l'INAIL e con le principali assicurazioni e fondi sanitari, per rendere i percorsi riabilitativi più accessibili."
       />
 
-      {/* Le nostre convenzioni */}
-      <section className="container-fkt py-16 sm:py-20">
+      {/* Le nostre convenzioni — livello ghiaccio + texture */}
+      <section className="bg-ghiaccio texture-dots">
+        <div className="container-fkt py-16 sm:py-20">
         <Reveal>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Le nostre convenzioni</h2>
+          <h2 className="h-section font-extrabold text-blu">Le nostre convenzioni</h2>
           <p className="mt-3 max-w-2xl text-muted-foreground">
             Enti, assicurazioni e fondi con cui il centro collabora per l'accesso alle prestazioni.
           </p>
@@ -154,7 +153,7 @@ export default function Convenzioni() {
           {CONVENZIONI.map((c, i) => (
             <Reveal key={c.nome} delay={(i % 4) as 0 | 1 | 2 | 3}>
               <div
-                className="hover-lift flex h-24 items-center justify-center rounded-2xl bg-white px-6 shadow-sm ring-1 ring-border"
+                className="hover-lift flex h-24 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-border"
                 title={c.nome}
               >
                 <img
@@ -168,17 +167,18 @@ export default function Convenzioni() {
             </Reveal>
           ))}
         </div>
+        </div>
       </section>
 
-      {/* Come accedere alle cure */}
-      <section className="relative overflow-hidden bg-white border-y border-border">
+      {/* Come accedere alle cure — livello bianco pieno, senza bordi meccanici */}
+      <section className="relative overflow-hidden bg-white">
         <div className="container-fkt py-16 sm:py-20">
           <Reveal>
             <p className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
               <span aria-hidden="true" className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-azzurro" />
               Iter e documenti
             </p>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+            <h2 className="mt-3 h-section font-extrabold text-blu">
               Come accedere alle cure
             </h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">
@@ -200,8 +200,8 @@ export default function Convenzioni() {
                   key={a.slug}
                   className={`rounded-2xl bg-ghiaccio transition-shadow duration-300 ${
                     isOpen
-                      ? "shadow-xl ring-2 ring-[#2279b0]"
-                      : "shadow-sm ring-1 ring-border hover:shadow-md"
+                      ? "shadow-fkt-3 ring-2 ring-[#2279b0]"
+                      : "shadow-fkt-2 ring-1 ring-border hover:shadow-fkt-3"
                   }`}
                 >
                   <button
@@ -281,8 +281,8 @@ export default function Convenzioni() {
                     onClick={() => setAperta(isOpen ? null : a.slug)}
                     className={`flex flex-col rounded-2xl bg-ghiaccio p-6 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#2279b0] focus-visible:ring-offset-2 ${
                       isOpen
-                        ? "shadow-xl ring-2 ring-[#2279b0]"
-                        : "shadow-sm ring-1 ring-border hover:shadow-md hover:ring-[#2279b0]/40"
+                        ? "shadow-fkt-3 ring-2 ring-[#2279b0]"
+                        : "shadow-fkt-2 ring-1 ring-border hover:shadow-fkt-3 hover:ring-[#2279b0]/40"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-4">
@@ -313,7 +313,7 @@ export default function Convenzioni() {
             {selezionata && (
               <div
                 key={selezionata.slug}
-                className="fade-slide-in mt-6 rounded-2xl bg-ghiaccio p-8 shadow-sm ring-1 ring-[#2279b0]/40"
+                className="fade-slide-in mt-6 rounded-2xl bg-ghiaccio p-8 shadow-fkt-1 ring-1 ring-[#2279b0]/40"
                 role="tabpanel"
               >
                 <h3 className="text-xl font-extrabold text-blu">{selezionata.titolo}</h3>
@@ -351,33 +351,13 @@ export default function Convenzioni() {
         </div>
       </section>
 
-      {/* CTA finale */}
-      <section className="bg-blu text-white">
-        <div className="container-fkt py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">
-              Hai dubbi sulla tua convenzione?
-            </h2>
-            <p className="mt-2 text-white/80">
-              La segreteria verifica con te requisiti, documenti e tempi di accesso.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={SITE.telefonoHref}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
-            >
-              <Phone className="h-4 w-4" /> {SITE.telefono}
-            </a>
-            <Link
-              to="/contatti"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
-            >
-              Contattaci <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* CTA finale — variante fotografica (ingresso sede + overlay blu) */}
+      <CtaBand
+        variant="fotografica"
+        image="/assets/sede-ingresso.webp"
+        title="Hai dubbi sulla tua convenzione?"
+        text="La segreteria verifica con te requisiti, documenti e tempi di accesso."
+      />
     </>
   );
 }

@@ -1,7 +1,7 @@
-import { Link } from "react-router";
-import { MapPin, Clock, Car, Bus, ArrowRight } from "lucide-react";
+import { MapPin, Clock, Car, Bus } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { CtaBand } from "@/components/CtaBand";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CornerBrackets } from "@/components/CornerBrackets";
@@ -44,7 +44,7 @@ export default function IlCentro() {
       <section className="container-fkt py-16 sm:py-20">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <Reveal>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">
+            <h2 className="h-section font-extrabold text-blu">
               Un punto di riferimento per la riabilitazione, dal {SITE.dal}.
             </h2>
             <p className="mt-5 text-foreground/80 leading-relaxed">
@@ -58,7 +58,7 @@ export default function IlCentro() {
               domenica è chiuso. FKT fa parte dell'associazione <strong>Sanità Futura</strong>.
             </p>
 
-            <blockquote className="relative mt-8 rounded-2xl border border-border bg-white p-6 shadow-sm">
+            <blockquote className="relative mt-8 rounded-2xl border border-border bg-white p-6 shadow-fkt-1">
               <CornerBrackets />
               <p className="text-lg font-semibold text-blu italic">
                 "La salute non è tutto, ma senza salute tutto è niente."
@@ -82,32 +82,37 @@ export default function IlCentro() {
         </div>
       </section>
 
-      {/* Gli spazi del centro */}
-      <section className="bg-white border-y border-border">
+      {/* Gli spazi del centro — livello ghiaccio + texture */}
+      <section className="bg-ghiaccio texture-dots">
         <div className="container-fkt py-16 sm:py-20">
           <Reveal>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-azzurro">Gli spazi</p>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+            <h2 className="mt-3 h-section font-extrabold text-blu">
               Ambienti pensati per la riabilitazione.
             </h2>
             <div className="dashed-divider mt-6 max-w-xs" aria-hidden="true" />
           </Reveal>
+          {/* Layout editoriale asimmetrico: la prima foto occupa un'area doppia (2x2) su desktop */}
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {SPAZI.map((s, i) => (
-              <Reveal key={s.src} delay={(i % 3) as 0 | 1 | 2}>
-                <figure className="group relative overflow-hidden rounded-3xl shadow-md ring-1 ring-border">
+              <Reveal
+                key={s.src}
+                delay={(i % 3) as 0 | 1 | 2}
+                className={i === 0 ? "lg:col-span-2 lg:row-span-2" : ""}
+              >
+                <figure className="group relative h-full overflow-hidden rounded-3xl shadow-fkt-1 ring-1 ring-border">
                   <img
                     src={s.src}
                     alt={s.alt}
                     loading="lazy"
                     decoding="async"
-                    className="h-64 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    className={
+                      "w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 " +
+                      (i === 0 ? "h-64 lg:h-full" : "h-64")
+                    }
                   />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-blu/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  />
-                  <figcaption className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-blu shadow-sm backdrop-blur">
+                  {/* Caption: sempre visibile su mobile/touch, in hover dal basso su desktop */}
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-blu/80 via-blu/40 to-transparent px-4 pb-3.5 pt-10 text-sm font-semibold text-white transition-all duration-300 lg:translate-y-3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
                     {s.etichetta}
                   </figcaption>
                 </figure>
@@ -120,7 +125,7 @@ export default function IlCentro() {
       {/* Info pratiche */}
       <section className="container-fkt py-16 sm:py-20">
         <Reveal>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Informazioni pratiche</h2>
+          <h2 className="h-section font-extrabold text-blu">Informazioni pratiche</h2>
           <div className="dashed-divider mt-6 max-w-xs" aria-hidden="true" />
         </Reveal>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -147,9 +152,9 @@ export default function IlCentro() {
             },
           ].map((info, i) => (
             <Reveal key={info.titolo} delay={(i % 4) as 0 | 1 | 2 | 3}>
-              <div className="hover-lift h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ghiaccio">
-                  <info.icona className="h-5 w-5 text-azzurro" />
+              <div className="hover-lift h-full rounded-2xl bg-white p-6 ring-1 ring-border">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
+                  <info.icona className="h-5 w-5 text-blu" />
                 </span>
                 <h3 className="mt-4 font-bold text-blu">{info.titolo}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{info.testo}</p>
@@ -159,37 +164,18 @@ export default function IlCentro() {
         </div>
       </section>
 
-      {/* CTA finale */}
-      <section className="relative overflow-hidden text-white">
-        <img
-          src="/assets/sala-corsi-ampia.jpg"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-blu/85" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(circle at 80% 20%, hsl(204 68% 41% / 0.35) 0%, transparent 55%)" }}
-        />
-        <div className="container-fkt relative py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Vieni a trovarci in sede.</h2>
-            <p className="mt-2 text-white/80">
-              {SITE.indirizzo.via}, {SITE.indirizzo.citta} · {SITE.orari}
-            </p>
-          </div>
-          <Link
-            to="/contatti"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
-          >
-            Contattaci <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
+      {/* CTA finale — variante fotografica (foto sala + overlay blu) */}
+      <CtaBand
+        variant="fotografica"
+        image="/assets/sala-corsi-ampia.jpg"
+        title="Vieni a trovarci in sede."
+        text={
+          <p>
+            {SITE.indirizzo.via}, {SITE.indirizzo.citta} · {SITE.orari}
+          </p>
+        }
+        actions={[{ label: "Contattaci", to: "/contatti" }]}
+      />
     </>
   );
 }

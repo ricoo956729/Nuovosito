@@ -91,6 +91,24 @@
   .text-azzurro { color: hsl(var(--fkt-azzurro)); }
   .bg-ghiaccio { background-color: hsl(var(--fkt-ghiaccio)); }
   .container-fkt { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+
+  /* ——— Sistema di sfondi sezione a 3 livelli ———
+     Texture a puntini estratta da PageHero/NumeriDelCentro e resa riusabile:
+     .texture-dots per fondi chiari (ghiaccio), .texture-dots-dark per fondi blu.
+     I punti stessi sono a bassa opacità: il colore di fondo arriva dalla
+     classe bg-* applicata allo stesso elemento. */
+  .texture-dots {
+    background-image: radial-gradient(hsl(var(--fkt-azzurro) / 0.14) 1.2px, transparent 1.2px);
+    background-size: 16px 16px;
+  }
+  .texture-dots-dark {
+    background-image: radial-gradient(hsl(var(--fkt-azzurro-chiaro) / 0.16) 1.2px, transparent 1.2px);
+    background-size: 16px 16px;
+  }
+
+  /* ——— Scala tipografica fluida ——— */
+  .h-display { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); }
+  .h-section { font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem); }
 }
 
 @keyframes fade-slide-in {
@@ -117,16 +135,29 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Fade-in scroll (da applicare via JS/IntersectionObserver) */
-.reveal {
+/* Fade-in scroll (enhancement via JS/IntersectionObserver).
+   Logica invertita: .reveal da sola è SEMPRE visibile (crawler, no-JS e
+   rendering headless vedono il contenuto). Il componente Reveal aggiunge
+   .reveal-armed in useLayoutEffect, prima del paint, per applicare lo stato
+   nascosto + transition; .visible riporta allo stato finale. */
+.reveal-armed {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.reveal.visible {
+.reveal-armed.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  filter: none;
+}
+/* Varianti di ingresso (stato iniziale; in .visible torna tutto a none) */
+.reveal-armed[data-variant="blur"] {
+  filter: blur(4px);
+}
+.reveal-armed[data-variant="scale"] {
+  transform: scale(0.98) translateY(10px);
 }
 .reveal-delay-1 { transition-delay: 0.08s; }
 .reveal-delay-2 { transition-delay: 0.16s; }
@@ -140,13 +171,48 @@
 }
 .pulse-dot { animation: pulse-dot 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 
-/* Hover lift uniforme: -2px + shadow pop morbida */
+/* Hover lift uniforme: solleva di -4px e porta l'ombra dal livello
+   fkt-1 al livello fkt-3 (stessa easing di .ease-smooth) */
 .hover-lift {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  /* Compone con le ring-* di Tailwind (--tw-ring-shadow) per non cancellare il bordo ad anello */
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000),
+    0 1px 2px hsl(var(--fkt-blu) / 0.06);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -12px hsl(var(--fkt-blu) / 0.28);
+  transform: translateY(-4px);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000),
+    0 16px 40px -12px hsl(var(--fkt-blu) / 0.22);
+}
+
+/* Marquee convenzioni: scorrimento infinito in CSS puro.
+   La riga contiene la lista loghi duplicata: translateX(-50%) riporta
+   esattamente all'inizio della seconda copia (loop seamless). */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+/* Pausa in hover sull'intera striscia */
+.marquee-pause:hover .animate-marquee {
+  animation-play-state: paused;
+}
+/* Viewport del marquee: sfumatura ai bordi via mask-image.
+   Con prefers-reduced-motion diventa scrollabile orizzontalmente
+   (overflow-x: auto nel media query sotto), scrollbar nascosta. */
+.marquee-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  scrollbar-width: none;
+}
+.marquee-viewport::-webkit-scrollbar {
+  display: none;
 }
 
 /* Divisore tratteggiato "da disegno tecnico" */
@@ -165,12 +231,18 @@ html {
 /* Rispetto delle preferenze di movimento ridotto */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal {
+  .reveal,
+  .reveal-armed,
+  .reveal-armed[data-variant] {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
   .pulse-dot { animation: none; }
+  .animate-marquee { animation: none; }
+  /* Animazione ferma: la striscia resta consultabile con scroll orizzontale */
+  .marquee-viewport { overflow-x: auto; }
   .hover-lift, .hover-lift:hover {
     transition: none;
     transform: none;

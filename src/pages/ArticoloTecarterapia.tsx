@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { motion, useScroll } from "framer-motion";
 import { ArrowLeft, Phone, BookOpen, Check, List } from "lucide-react";
 import { Seo } from "@/components/Seo";
 import { SITE } from "@/lib/site-data";
@@ -33,11 +34,23 @@ function P({ children }: { children: React.ReactNode }) {
 }
 
 export default function ArticoloTecarterapia() {
+  // Barra di avanzamento lettura: scaleX legato allo scroll dell'intera pagina.
+  // È informativa (non decorativa), quindi resta attiva anche con
+  // prefers-reduced-motion: il valore segue direttamente lo scroll, senza animazioni autonome.
+  const { scrollYProgress } = useScroll();
+
   return (
     <>
       <Seo
         title="Tecarterapia: cos'è, benefici e quando può essere utile | FKT Matera"
         description="Scopri cos'è la tecarterapia, come funziona, quali benefici può offrire e quando può essere utile in fisioterapia."
+      />
+
+      {/* Barra avanzamento lettura — fixed sopra l'header sticky (z-50, h-16) */}
+      <motion.div
+        aria-hidden="true"
+        className="fixed inset-x-0 top-0 z-[60] h-1 origin-left bg-azzurro"
+        style={{ scaleX: scrollYProgress }}
       />
 
       {/* Testata editoriale */}

@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router";
-import { ArrowRight, Phone, Landmark, BriefcaseMedical, ShieldCheck } from "lucide-react";
-import { SITE, MODALITA_ACCESSO } from "@/lib/site-data";
+import { ArrowRight, Landmark, BriefcaseMedical, ShieldCheck } from "lucide-react";
+import { MODALITA_ACCESSO } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { CtaBand } from "@/components/CtaBand";
 import { TerapieGrid } from "@/components/terapie/TerapieGrid";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
@@ -70,7 +71,7 @@ const AREE: Area[] = [
           "Programmi riabilitativi successivi a interventi chirurgici, finalizzati al recupero progressivo di mobilità, forza, schema motorio e autonomia.",
       },
       {
-        titolo: "Training deambulatorio e del passo",
+        titolo: "Training del passo",
         immagine: "/assets/terapie-manuali/training-deambulatorio-2.webp",
         descrizione:
           "Percorso di rieducazione al cammino e alla posizione eretta, con verticalizzazione progressiva, recupero del carico, uso degli ausili e lavoro su equilibrio e stabilità.",
@@ -229,8 +230,9 @@ export default function Servizi() {
         subtitle="Terapie manuali, terapie strumentali e visite fisiatriche: tre aree di intervento coordinate in un unico percorso di cura."
       />
 
-      {/* Intro approccio */}
-      <section className="container-fkt py-14 sm:py-16">
+      {/* Intro approccio — livello ghiaccio + texture (spezza dal bianco della PageHero) */}
+      <section className="bg-ghiaccio texture-dots">
+        <div className="container-fkt py-14 sm:py-16">
         <Reveal>
         <p className="max-w-3xl text-lg text-foreground/80 leading-relaxed">
           Ogni percorso inizia da una valutazione accurata della persona: ascoltiamo la storia
@@ -238,14 +240,15 @@ export default function Servizi() {
           piano di trattamento personalizzato, aggiornato passo dopo passo in base ai progressi.
         </p>
         </Reveal>
+        </div>
       </section>
 
-      {/* Aree di servizio */}
+      {/* Aree di servizio: alternanza bianco / ghiaccio+texture, senza bordi meccanici */}
       {AREE.map((area, i) => (
         <section
           key={area.slug}
           id={area.slug}
-          className={"scroll-mt-24 border-t border-border " + (i % 2 === 0 ? "bg-white" : "bg-ghiaccio")}
+          className={"scroll-mt-24 " + (i % 2 === 0 ? "bg-white" : "bg-ghiaccio texture-dots")}
         >
           <div className="container-fkt py-16 sm:py-20">
             <Reveal>
@@ -254,7 +257,7 @@ export default function Servizi() {
                   <p className="font-mono text-xs uppercase tracking-[0.3em] text-azzurro">
                     Area {String(i + 1).padStart(2, "0")}
                   </p>
-                  <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">{area.titolo}</h2>
+                  <h2 className="mt-3 h-section font-extrabold text-blu">{area.titolo}</h2>
                   <div className="dashed-divider mt-5 max-w-[8rem]" aria-hidden="true" />
                   <p className="mt-4 text-foreground/80 leading-relaxed">{area.descrizione}</p>
                 </div>
@@ -284,11 +287,11 @@ export default function Servizi() {
         </section>
       ))}
 
-      {/* Come accedere */}
-      <section className="border-t border-border bg-white">
+      {/* Come accedere — livello ghiaccio + texture (l'ultima area è bianca) */}
+      <section className="bg-ghiaccio texture-dots">
         <div className="container-fkt py-16 sm:py-20">
           <Reveal>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-blu">Come accedere alle prestazioni</h2>
+            <h2 className="h-section font-extrabold text-blu">Come accedere alle prestazioni</h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">
               Il centro è convenzionato e offre diverse modalità di accesso alle cure.
             </p>
@@ -298,9 +301,9 @@ export default function Servizi() {
               const Icona = ICONE_ACCESSO[i] ?? Landmark;
               return (
                 <Reveal key={m.slug} delay={(i % 3) as 0 | 1 | 2}>
-                  <div className="hover-lift h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ghiaccio">
-                      <Icona className="h-5 w-5 text-azzurro" />
+                  <div className="hover-lift h-full rounded-2xl bg-white p-6 ring-1 ring-border">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
+                      <Icona className="h-5 w-5 text-blu" />
                     </span>
                     <h3 className="mt-4 font-bold text-blu">{m.titolo}</h3>
                     <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{m.descrizione}</p>
@@ -318,43 +321,12 @@ export default function Servizi() {
         </div>
       </section>
 
-      {/* CTA finale */}
-      <section
-        className="relative overflow-hidden bg-blu text-white"
-        style={{
-          backgroundImage: 'linear-gradient(135deg, #082a4a 0%, #0d3a5c 50%, #082a4a 100%)'
-        }}
-      >
-        <div
-          aria-hidden="true"
-          className="absolute top-0 right-0 w-96 h-96 opacity-10"
-          style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)'
-          }}
-        />
-        <div className="container-fkt relative py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Non sai quale trattamento fa per te?</h2>
-            <p className="mt-2 text-white/80">
-              Parla con il nostro team: ti guideremo verso il percorso più indicato.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={SITE.telefonoHref}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
-            >
-              <Phone className="h-4 w-4" /> {SITE.telefono}
-            </a>
-            <Link
-              to="/contatti"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
-            >
-              Contattaci <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* CTA finale — variante minimale (blu-scuro pieno, compatta) */}
+      <CtaBand
+        variant="minimale"
+        title="Non sai quale trattamento fa per te?"
+        text="Parla con il nostro team: ti guideremo verso il percorso più indicato."
+      />
     </>
   );
 }

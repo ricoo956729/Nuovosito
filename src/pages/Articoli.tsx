@@ -25,7 +25,7 @@ export default function Articoli() {
         <Reveal>
           <Link
             to="/articoli/tecarterapia-cos-e-benefici-quando-utile"
-            className="group grid overflow-hidden rounded-3xl bg-white shadow-md ring-1 ring-border transition duration-300 hover:shadow-2xl hover:ring-azzurro/40 md:grid-cols-2"
+            className="group grid overflow-hidden rounded-3xl bg-white shadow-fkt-2 ring-1 ring-border transition duration-300 hover:shadow-fkt-3 hover:ring-azzurro/40 md:grid-cols-2"
           >
             <div className="relative overflow-hidden">
               <img
@@ -65,9 +65,9 @@ export default function Articoli() {
         </Reveal>
 
         <Reveal delay={1}>
-          <div className="mt-10 flex items-center gap-3 rounded-2xl bg-white p-6 text-sm text-muted-foreground shadow-sm ring-1 ring-border">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ghiaccio">
-              <Clock3 className="h-5 w-5 text-azzurro" />
+          <div className="mt-10 flex items-center gap-3 rounded-2xl bg-white p-6 text-sm text-muted-foreground shadow-fkt-1 ring-1 ring-border">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
+              <Clock3 className="h-5 w-5 text-blu" />
             </span>
             Nuovi approfondimenti sono in arrivo: stiamo preparando altri articoli su terapie e
             riabilitazione.
@@ -75,33 +75,42 @@ export default function Articoli() {
         </Reveal>
       </section>
 
-      {/* Rimando alle aree di cura */}
-      <section className="bg-white border-t border-border">
+      {/* Rimando alle aree di cura — livello ghiaccio + texture */}
+      <section className="bg-ghiaccio texture-dots">
         <div className="container-fkt py-16 sm:py-20">
           <Reveal>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-azzurro">Dal blog ai trattamenti</p>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+            <h2 className="mt-3 h-section font-extrabold text-blu">
               Esplora le aree di cura del centro.
             </h2>
             <div className="dashed-divider mt-6 max-w-xs" aria-hidden="true" />
           </Reveal>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {AREE_SERVIZI.map((area, i) => (
               <Reveal key={area.slug} delay={(i % 3) as 0 | 1 | 2}>
                 <Link
                   to={`/servizi#${area.slug}`}
-                  className="group block h-full overflow-hidden rounded-3xl bg-ghiaccio shadow-sm ring-1 ring-border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:ring-primary/20"
+                  className="group block h-full rounded-3xl bg-ghiaccio p-4 pb-6 shadow-fkt-2 ring-1 ring-border transition-all duration-300 hover:shadow-fkt-3 hover:-translate-y-1 hover:ring-primary/20"
                 >
-                  <div className="h-40 overflow-hidden">
-                    <img
-                      src={area.immagine}
-                      alt={area.titolo}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
+                  {/* Immagine che sborda dal bordo superiore + badge numerico, come in Home */}
+                  <div className="relative -mt-9">
+                    <div className="h-40 overflow-hidden rounded-2xl bg-white shadow-fkt-2">
+                      <img
+                        src={area.immagine}
+                        alt={area.titolo}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      className="absolute -bottom-3 right-3 flex h-9 items-center rounded-full bg-blu px-3.5 text-sm font-extrabold tracking-wider text-white shadow-fkt-3 ring-2 ring-white"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  <div className="p-6">
+                  <div className="px-2 pt-6">
                     <h3 className="text-lg font-bold text-blu">{area.titolo}</h3>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-azzurro group-hover:text-blu transition-colors duration-300">
                       Scopri l'area <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />

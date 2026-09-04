@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { NAV, SITE } from "@/lib/site-data";
@@ -6,9 +6,25 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const next = window.scrollY > 8;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-white/90 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b border-border/60 bg-white/90 backdrop-blur transition-shadow duration-300",
+        scrolled ? "shadow-fkt-2" : "shadow-none"
+      )}
+    >
       <div className="container-fkt flex h-16 items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3" aria-label="FKT Matera — Home">
           <img src="/assets/logo-fkt-blu.svg" alt="Logo FKT" className="h-9 w-auto" />
@@ -29,7 +45,7 @@ export function Header() {
                 cn(
                   "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-secondary text-blu"
+                    ? "bg-blu text-white shadow-fkt-1"
                     : "text-foreground/80 hover:bg-secondary/60 hover:text-blu"
                 )
               }
@@ -77,8 +93,8 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    "rounded-lg px-3 py-3 text-base font-medium",
-                    isActive ? "bg-secondary text-blu" : "text-foreground/80"
+                    "rounded-lg px-3 py-3 text-base font-medium transition-colors duration-200",
+                    isActive ? "bg-blu text-white" : "text-foreground/80"
                   )
                 }
               >

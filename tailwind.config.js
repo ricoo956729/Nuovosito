@@ -64,6 +64,12 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        /* Scala di elevazione FKT: ombre colorate derivate dal blu brand (#082a4a), mai nere.
+           fkt-1 = card informative statiche, fkt-2 = card interattive/cliccabili,
+           fkt-3 = stati hover ed elementi hero */
+        "fkt-1": "0 1px 2px hsl(209 80% 16% / 0.06)",
+        "fkt-2": "0 4px 16px -4px hsl(209 80% 16% / 0.10)",
+        "fkt-3": "0 16px 40px -12px hsl(209 80% 16% / 0.22)",
       },
       keyframes: {
         "accordion-down": {

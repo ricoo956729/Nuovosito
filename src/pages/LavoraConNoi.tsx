@@ -62,7 +62,7 @@ export default function LavoraConNoi() {
       <section className="container-fkt py-16 sm:py-20">
         <div className="mx-auto max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">Candidatura</p>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+          <h2 className="mt-3 h-section font-extrabold text-blu">
             Raccontaci il tuo profilo.
           </h2>
           <p className="mt-3 text-muted-foreground">
@@ -73,7 +73,7 @@ export default function LavoraConNoi() {
           <Reveal>
           <form
             onSubmit={invia}
-            className="mt-8 rounded-3xl bg-white p-6 sm:p-8 shadow-xl shadow-blu/5 ring-1 ring-border space-y-5"
+            className="mt-8 rounded-3xl bg-white p-6 sm:p-8 shadow-fkt-1 ring-1 ring-border space-y-5"
           >
             <div>
               <label htmlFor="nome" className="mb-1.5 block text-sm font-semibold text-blu">
@@ -155,15 +155,15 @@ export default function LavoraConNoi() {
         </div>
       </section>
 
-      {/* Come candidarsi */}
-      <section className="bg-white border-y border-border">
+      {/* Come candidarsi — livello ghiaccio + texture */}
+      <section className="bg-ghiaccio texture-dots">
         <div className="container-fkt py-16 sm:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-azzurro">
                 Come candidarsi
               </p>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blu">
+              <h2 className="mt-3 h-section font-extrabold text-blu">
                 Tre semplici passaggi.
               </h2>
               <ol className="relative mt-8 space-y-8">
@@ -187,7 +187,7 @@ export default function LavoraConNoi() {
               </ol>
             </div>
 
-            <div className="rounded-3xl bg-ghiaccio p-8 sm:p-10 text-center">
+            <div className="rounded-3xl bg-white p-8 sm:p-10 text-center ring-1 ring-border shadow-fkt-1">
               <Mail className="mx-auto h-10 w-10 text-azzurro" />
               <h3 className="mt-4 text-xl font-extrabold text-blu">Preferisci scriverci direttamente?</h3>
               <p className="mt-2 text-sm text-muted-foreground">

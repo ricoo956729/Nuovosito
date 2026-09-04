@@ -72,6 +72,39 @@ export const AREE_SERVIZI = [
   },
 ] as const;
 
+// Recensioni Google reali fornite dal titolare (tutte 5 stelle).
+// I testi sono verbatim; i tagli sono segnalati con "…".
+export const RECENSIONI = [
+  {
+    nome: "Pia",
+    testo:
+      "Sono arrivata, accompagnata, con stampelle e tutore, incapace di camminare. In un lasso di tempo ragionevolmente breve, grazie alla professionalità e alla tenacia del fisioterapista, Andrea, ho cominciato a muovere… i primi passi. Fino ad arrivare ad oggi: cammino finalmente! … oltre all'alto livello professionale, sono persone capaci di accogliere, far sentire a proprio agio i pazienti.",
+    stelle: 5,
+    data: "1 mese fa",
+  },
+  {
+    nome: "Giusy",
+    testo:
+      "Un centro d'eccellenza… sono entrata che non riuscivo a muovere il mio braccio sinistro, con la cervicale bloccata… Voglio fare un plauso al fantastico Gabriele che con le sue mani d'oro mi ha rimessa in sesto… Un plauso alle ragazze dell'accettazione sempre gentili, cordiali e a disposizione del paziente… grazie infinite a questo centro che a mio dire funziona alla perfezione",
+    stelle: 5,
+    data: "6 mesi fa",
+  },
+  {
+    nome: "Nadia",
+    testo:
+      "…risolto grazie alla professionalità e competenza del personale. Tutti estremamente preparati, disponibili e anche simpatici, riescono a mettere a proprio agio fin dal primo incontro. L'atmosfera è sempre piacevole e serena… Un ringraziamento speciale alla mia terapeuta Annalisa Manicone, per la sua bravura, pazienza e umanità: è stata fondamentale nel mio percorso di recupero. Consiglio vivamente questo centro a chiunque cerchi un trattamento efficace in un ambiente accogliente e con veri professionisti!",
+    stelle: 5,
+    data: "7 mesi fa",
+  },
+  {
+    nome: "Gio",
+    testo:
+      "Mi piace testimoniare come tutti i terapisti del centro FKT siano una vera risorsa nonché un eccellenza nel campo della riabilitazione. Voglio inoltre ringraziare la dottoressa Adele Genco per la pazienza e la grande professionalità, doti non proprio scontate. Ancora un grazie a tutti voi con l'augurio di una buona vita",
+    stelle: 5,
+    data: "2 anni fa",
+  },
+] as const;
+
 export const MODALITA_ACCESSO = [
   {
     slug: "ssn",

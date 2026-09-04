@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 type Props = {
   /** Micro-label in maiuscolo sopra il titolo (es. "Il Centro") */
@@ -15,19 +16,47 @@ type Props = {
  * label con punto pulsante. I contenuti testuali restano nelle pagine.
  */
 export function PageHero({ label, title, subtitle, children }: Props) {
+  const heroRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  // Parallasse lieve del vitruviano: ±24px verticali e ±3° di rotazione
+  const vitruvianoY = useTransform(scrollYProgress, [0, 1], [-24, 24]);
+  const vitruvianoRotate = useTransform(scrollYProgress, [0, 1], [-3, 3]);
+
   return (
     <section
+      ref={heroRef}
       className="relative overflow-hidden border-b border-border"
       style={{ background: "linear-gradient(165deg, #eef4f8 0%, #f7fafc 55%, #ffffff 100%)" }}
     >
-      {/* Vitruviano — simbolo identitario FKT, posizione e intensità uniformi */}
-      <img
-        src="/assets/vitruviano-servizi-integrale.webp"
-        alt=""
+      {/* Vitruviano — simbolo identitario FKT, posizione e intensità uniformi.
+          Il wrapper esterno gestisce posizionamento/centratura; il parallasse
+          vive su un motion.div interno per non sovrascrivere il -translate-y-1/2. */}
+      <div
         aria-hidden="true"
-        decoding="async"
         className="pointer-events-none absolute -right-14 top-1/2 w-[220px] -translate-y-1/2 opacity-[0.14] sm:-right-8 sm:w-[320px] sm:opacity-[0.2] lg:right-4 lg:w-[440px] lg:opacity-[0.28] [mask-image:linear-gradient(to_left,black_55%,transparent_98%)]"
-      />
+      >
+        {reduceMotion ? (
+          <img
+            src="/assets/vitruviano-servizi-integrale.webp"
+            alt=""
+            decoding="async"
+            className="h-auto w-full"
+          />
+        ) : (
+          <motion.div style={{ y: vitruvianoY, rotate: vitruvianoRotate }}>
+            <img
+              src="/assets/vitruviano-servizi-integrale.webp"
+              alt=""
+              decoding="async"
+              className="h-auto w-full"
+            />
+          </motion.div>
+        )}
+      </div>
       {/* Texture a puntini, angolo in basso a sinistra */}
       <div
         aria-hidden="true"

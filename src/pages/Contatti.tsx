@@ -78,19 +78,20 @@ export default function Contatti() {
         subtitle="Contattaci per ricevere informazioni, prenotare una valutazione o capire quale modalità di accesso è più adatta alle tue esigenze: privata, SSN, INAIL o assicurativa."
       />
 
-      {/* Canali di contatto */}
-      <section className="container-fkt py-16 sm:py-20">
+      {/* Canali di contatto — livello ghiaccio + texture: le card bianche emergono */}
+      <section className="bg-ghiaccio texture-dots">
+        <div className="container-fkt py-16 sm:py-20">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Reveal>
           <a
             href={SITE.telefonoHref}
-            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 ring-1 ring-border hover:ring-[#2279b0]/50"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
               <Phone className="h-6 w-6 text-azzurro" />
             </span>
             <h2 className="mt-4 text-lg font-bold text-blu">Chiama l'ambulatorio</h2>
-            <p className="mt-1 text-2xl font-extrabold text-azzurro font-[Manrope]">{SITE.telefono}</p>
+            <p className="mt-1 text-2xl font-extrabold tracking-tight text-azzurro font-[Manrope]">{SITE.telefono}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               La segreteria risponde negli orari di apertura.
             </p>
@@ -102,13 +103,13 @@ export default function Contatti() {
             href={SITE.whatsappHref}
             target="_blank"
             rel="noreferrer"
-            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 ring-1 ring-border hover:ring-[#2279b0]/50"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
               <MessageCircle className="h-6 w-6 text-azzurro" />
             </span>
             <h2 className="mt-4 text-lg font-bold text-blu">Scrivi su WhatsApp</h2>
-            <p className="mt-1 text-2xl font-extrabold text-azzurro font-[Manrope]">{SITE.whatsapp}</p>
+            <p className="mt-1 text-2xl font-extrabold tracking-tight text-azzurro font-[Manrope]">{SITE.whatsapp}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               Il modo più rapido per informazioni e disponibilità.
             </p>
@@ -118,9 +119,9 @@ export default function Contatti() {
           <Reveal delay={2} className="sm:col-span-2 lg:col-span-1">
           <a
             href={`mailto:${SITE.email}`}
-            className="group hover-lift block h-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-border hover:ring-[#2279b0]/50"
+            className="group hover-lift block h-full rounded-2xl bg-white p-6 ring-1 ring-border hover:ring-[#2279b0]/50"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ghiaccio">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-azzurro-chiaro to-white ring-1 ring-azzurro/20 shadow-fkt-1">
               <Mail className="h-6 w-6 text-azzurro" />
             </span>
             <h2 className="mt-4 text-lg font-bold text-blu">Email segreteria</h2>
@@ -135,7 +136,7 @@ export default function Contatti() {
         {/* Indirizzo + orari + foto ingresso */}
         <Reveal>
         <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl bg-ghiaccio p-8">
+          <div className="rounded-3xl bg-white p-8 ring-1 ring-border shadow-fkt-1">
             <div className="flex items-start gap-4">
               <MapPin className="mt-1 h-6 w-6 shrink-0 text-azzurro" />
               <div>
@@ -195,6 +196,7 @@ export default function Contatti() {
         <Reveal>
           <MappaSede />
         </Reveal>
+        </div>
       </section>
     </>
   );
