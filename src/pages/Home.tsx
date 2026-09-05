@@ -19,20 +19,18 @@ export default function Home() {
   return (
     <>
       <Seo title="FKT Matera | Fisioterapia e rieducazione funzionale" description="Ambulatorio di fisioterapia e rieducazione funzionale a Matera dal 1995. Percorsi personalizzati per dolore, recupero del movimento e prestazioni fisiatriche." />
-      {/* HERO full-width — variante fotografica (trattamento) */}
+      {/* HERO full-width — sfondo astratto premium */}
       <section ref={heroRef} className="relative overflow-hidden bg-ghiaccio">
-        {/* foto trattamento: solo desktop, con parallasse leggero (disattivato se prefers-reduced-motion) */}
+        {/* sfondo astratto: solo desktop, con parallasse leggero (disattivato se prefers-reduced-motion) */}
         {reduceMotion ? (
           <img
-            src="/assets/hero-trattamento-1.webp"
-            srcSet="/assets/hero-trattamento-1-mobile.webp 768w, /assets/hero-trattamento-1.webp 1366w"
-            sizes="100vw"
-            alt="Trattamento fisioterapico del rachide cervicale"
-            width="1366"
-            height="768"
+            src="/assets/hero-bg-premium.jpg"
+            alt=""
+            width="1920"
+            height="1080"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 hidden h-full w-full object-cover object-right sm:block"
+            className="absolute inset-0 hidden h-full w-full object-cover object-center sm:block"
           />
         ) : (
           <motion.div
@@ -40,15 +38,13 @@ export default function Home() {
             style={{ y: heroImageY }}
           >
             <img
-              src="/assets/hero-trattamento-1.webp"
-              srcSet="/assets/hero-trattamento-1-mobile.webp 768w, /assets/hero-trattamento-1.webp 1366w"
-              sizes="100vw"
-              alt="Trattamento fisioterapico del rachide cervicale"
-              width="1366"
-              height="768"
+              src="/assets/hero-bg-premium.jpg"
+              alt=""
+              width="1920"
+              height="1080"
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full scale-110 object-cover object-right"
+              className="h-full w-full scale-110 object-cover object-center"
             />
           </motion.div>
         )}
@@ -236,3 +232,4 @@ export default function Home() {
     </>
   );
 }
+
