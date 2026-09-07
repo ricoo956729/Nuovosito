@@ -352,9 +352,9 @@ export default function Convenzioni() {
       </section>
 
       {/* CTA finale — variante fotografica (ingresso sede + overlay blu) */}
+      {/* CTA finale — pattern sistematico */}
       <CtaBand
-        variant="fotografica"
-        image="/assets/sede-ingresso.webp"
+        eyebrow="Convenzioni"
         title="Hai dubbi sulla tua convenzione?"
         text="La segreteria verifica con te requisiti, documenti e tempi di accesso."
       />

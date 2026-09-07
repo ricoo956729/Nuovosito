@@ -1,11 +1,12 @@
 import { useRef, type CSSProperties } from "react";
 import { Link } from "react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Phone, MessageCircle, ArrowRight, MapPin, Clock, Star } from "lucide-react";
+import { Phone, MessageCircle, ArrowRight, MapPin, Clock } from "lucide-react";
 import { SITE, AREE_SERVIZI, CONVENZIONI } from "@/lib/site-data";
 import { NumeriDelCentro } from "@/sections/NumeriDelCentro";
 import { Recensioni } from "@/sections/Recensioni";
 import { Seo } from "@/components/Seo";
+import { CtaBand } from "@/components/CtaBand";
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
@@ -66,26 +67,6 @@ export default function Home() {
             background: 'radial-gradient(circle at 30% 30%, rgba(34,121,176,0.15) 0%, transparent 70%)'
           }}
         />
-
-        {/* Badge recensioni in vetro, sopra la foto (solo desktop) */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
-          className="absolute bottom-10 right-8 hidden sm:block lg:right-14"
-        >
-          <div className="rounded-2xl bg-white/85 px-5 py-4 shadow-fkt-3 ring-1 ring-white/70 backdrop-blur">
-            <div className="flex items-center gap-1" role="img" aria-label="Valutazione 4,8 su 5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden />
-              ))}
-            </div>
-            <p className="mt-2 font-[Manrope] text-xl font-extrabold leading-none text-blu">
-              4,8<span className="text-sm font-bold text-muted-foreground">/5</span>
-            </p>
-            <p className="mt-1 text-xs font-medium text-muted-foreground">recensioni Google</p>
-          </div>
-        </motion.div>
 
         <div className="relative container-fkt flex flex-col justify-center pb-14 pt-0 sm:min-h-[86vh] sm:py-20">
           {/* Banner fotografico in cima, full-bleed (solo mobile) */}
@@ -236,40 +217,12 @@ export default function Home() {
       {/* Recensioni Google — sezione bianca tra convenzioni (ghiaccio) e CTA (scura) */}
       <Recensioni />
 
-      {/* Banner contatti — banda contenuta e arrotondata, distinta dal footer */}
-      <section className="pb-20 pt-4">
-        <div className="container-fkt">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-gradient-to-r from-azzurro to-blu px-8 py-12 text-white shadow-fkt-3 sm:flex-row sm:items-center sm:px-12">
-            <div>
-              <h2 className="text-2xl font-extrabold sm:text-3xl">
-                Prenota una valutazione o chiedi informazioni.
-              </h2>
-              <div className="mt-3 flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/85">
-                <span className="inline-flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> {SITE.indirizzo.via}, {SITE.indirizzo.citta}
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Clock className="h-4 w-4" /> {SITE.orari}
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <a
-                href={SITE.telefonoHref}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
-              >
-                <Phone className="h-4 w-4" /> {SITE.telefono}
-              </a>
-              <Link
-                to="/contatti"
-                className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
-              >
-                <ArrowRight className="h-4 w-4" /> Vai ai contatti
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* CTA finale — pattern sistematico (desktop fotografica, mobile editoriale) */}
+      <CtaBand
+        eyebrow="Fisioterapia a Matera dal 1995"
+        title="Fai il primo passo. Al resto pensiamo noi."
+        text="Una valutazione per capire il problema e il percorso più adatto: chiamaci o scrivici su WhatsApp."
+      />
     </>
   );
 }

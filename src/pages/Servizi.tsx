@@ -321,9 +321,9 @@ export default function Servizi() {
         </div>
       </section>
 
-      {/* CTA finale — variante minimale (blu-scuro pieno, compatta) */}
+      {/* CTA finale — pattern sistematico */}
       <CtaBand
-        variant="minimale"
+        eyebrow="Servizi"
         title="Non sai quale trattamento fa per te?"
         text="Parla con il nostro team: ti guideremo verso il percorso più indicato."
       />

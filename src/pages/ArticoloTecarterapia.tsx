@@ -1,9 +1,10 @@
 import { Link } from "react-router";
 import { motion, useScroll } from "framer-motion";
-import { ArrowLeft, Phone, BookOpen, Check, List } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, List, Phone } from "lucide-react";
 import { Seo } from "@/components/Seo";
 import { SITE } from "@/lib/site-data";
 import { Reveal } from "@/components/Reveal";
+import { CtaBand } from "@/components/CtaBand";
 
 const INDICE = [
   { id: "cos-e-la-tecarterapia", titolo: "Cos'è la tecarterapia" },
@@ -265,28 +266,18 @@ export default function ArticoloTecarterapia() {
         </P>
 
         <Reveal>
-          <div
-            className="relative mt-14 overflow-hidden rounded-3xl p-8 text-white sm:flex sm:items-center sm:justify-between sm:gap-6"
-            style={{ backgroundImage: "linear-gradient(135deg, #082a4a 0%, #0d3a5c 55%, #082a4a 100%)" }}
-          >
-            <div
-              aria-hidden="true"
-              className="absolute -right-16 -top-16 h-56 w-56"
-              style={{ background: "radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%)" }}
+          <div className="mt-14">
+            <CtaBand
+              variant="card"
+              framed={false}
+              icon={Phone}
+              title="Hai dolore o difficoltà nei movimenti?"
+              text="Prenota una valutazione fisioterapica presso FKT e scopri se la tecarterapia può essere utile nel tuo percorso."
+              actions={[
+                { label: "Prenota una valutazione", href: SITE.telefonoHref },
+                { label: "Scrivici su WhatsApp", href: SITE.whatsappHref },
+              ]}
             />
-            <div className="relative">
-              <h2 className="text-xl font-extrabold">Hai dolore o difficoltà nei movimenti?</h2>
-              <p className="mt-2 text-sm text-white/80">
-                Prenota una valutazione fisioterapica presso FKT e scopri se la tecarterapia può
-                essere utile nel tuo percorso.
-              </p>
-            </div>
-            <a
-              href={SITE.telefonoHref}
-              className="relative mt-5 sm:mt-0 inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
-            >
-              <Phone className="h-4 w-4" /> Prenota una valutazione
-            </a>
           </div>
         </Reveal>
       </article>

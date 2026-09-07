@@ -164,17 +164,13 @@ export default function IlCentro() {
         </div>
       </section>
 
-      {/* CTA finale — variante fotografica (foto sala + overlay blu) */}
+      {/* CTA finale — pattern sistematico */}
       <CtaBand
-        variant="fotografica"
-        image="/assets/sala-corsi-ampia.jpg"
+        eyebrow="Il centro"
         title="Vieni a trovarci in sede."
-        text={
-          <p>
-            {SITE.indirizzo.via}, {SITE.indirizzo.citta} · {SITE.orari}
-          </p>
-        }
+        text={`${SITE.indirizzo.via}, ${SITE.indirizzo.citta} · ${SITE.orari}`}
         actions={[{ label: "Contattaci", to: "/contatti" }]}
+        footer={false}
       />
     </>
   );

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import { Mail, ArrowRight, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
+import { CtaBand } from "@/components/CtaBand";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 
@@ -205,21 +205,14 @@ export default function LavoraConNoi() {
         </div>
       </section>
 
-      {/* CTA finale */}
-      <section className="bg-blu text-white">
-        <div className="container-fkt py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Vuoi prima conoscere il centro?</h2>
-            <p className="mt-2 text-white/80">Scopri la sede, gli spazi e il nostro modo di lavorare.</p>
-          </div>
-          <Link
-            to="/il-centro"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-secondary"
-          >
-            Scopri il centro <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
+      {/* CTA finale — pattern sistematico */}
+      <CtaBand
+        eyebrow="Lavora con noi"
+        title="Vuoi prima conoscere il centro?"
+        text="Scopri la sede, gli spazi e il nostro modo di lavorare."
+        actions={[{ label: "Scopri il centro", to: "/il-centro" }]}
+        footer={false}
+      />
     </>
   );
 }

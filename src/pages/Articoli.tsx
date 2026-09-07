@@ -4,6 +4,7 @@ import { AREE_SERVIZI } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { CtaBand } from "@/components/CtaBand";
 
 export default function Articoli() {
   return (
@@ -122,6 +123,13 @@ export default function Articoli() {
           </div>
         </div>
       </section>
+
+      {/* CTA finale — pattern sistematico */}
+      <CtaBand
+        eyebrow="Articoli e approfondimenti"
+        title="Fai il primo passo. Al resto pensiamo noi."
+        text="Una valutazione per capire il problema e il percorso più adatto: chiamaci o scrivici su WhatsApp."
+      />
     </>
   );
 }

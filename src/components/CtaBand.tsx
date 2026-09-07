@@ -1,130 +1,225 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { Link } from "react-router";
-import { Phone, ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarCheck, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 
-export type CtaBandAction = {
+type CtaBandAction = {
   label: string;
-  /** Link interno (react-router) */
-  to?: string;
-  /** Link esterno o tel: */
   href?: string;
+  to?: string;
 };
 
-type Props = {
+type CtaBandProps = {
   /**
-   * fotografica: immagine di sfondo + overlay blu (usata in IlCentro, Convenzioni)
-   * geometrica: blu + vitruviano a bassa opacità + texture dots dark (Home)
-   * minimale: blu-scuro pieno, layout compatto (Servizi)
+   * "finale": CTA di fondo pagina, uguale su tutte le pagine (default).
+   *   Desktop: fotografica piena con overlay blu. Mobile: editoriale centrata.
+   * "card": richiamo contestuale compatto, da inserire dentro i contenuti.
    */
-  variant: "fotografica" | "geometrica" | "minimale";
+  variant?: "finale" | "card";
+  eyebrow?: string;
   title: ReactNode;
   text?: ReactNode;
-  /** Immagine di sfondo (solo variante fotografica) */
-  image?: string;
-  /**
-   * Azioni: la prima rende il bottone pieno bianco, la seconda (opzionale)
-   * quello outline. Default: telefono + pagina contatti.
-   */
   actions?: [CtaBandAction, CtaBandAction?];
+  /** Solo variante "card": icona mostrata nel tondo azzurro. */
+  icon?: ComponentType<{ className?: string }>;
+  /** Solo variante "finale": mostra la riga con orari e indirizzo. Default true. */
+  footer?: boolean;
+  /**
+   * Default true: avvolge la CTA in <section> + container-fkt (uso a fondo pagina).
+   * False: renderizza solo la CTA, da inserire in un contenitore esistente.
+   */
+  framed?: boolean;
 };
 
-function Action({ action, primary }: { action: CtaBandAction; primary: boolean }) {
-  const cls = primary
-    ? "inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition hover:bg-azzurro hover:text-white"
-    : "inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:bg-white/10";
-  const Icon = primary && action.href?.startsWith("tel:") ? Phone : ArrowRight;
-  const content = (
-    <>
-      <Icon className="h-4 w-4" /> {action.label}
-    </>
-  );
-  return action.to ? (
-    <Link to={action.to} className={cls}>
-      {content}
-    </Link>
-  ) : (
-    <a href={action.href} className={cls}>
-      {content}
+function ActionLink({
+  action,
+  className,
+  children,
+}: {
+  action: CtaBandAction;
+  className: string;
+  children: ReactNode;
+}) {
+  if (action.to) {
+    return (
+      <Link to={action.to} className={className}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={action.href} className={className}>
+      {children}
     </a>
   );
 }
 
+function ActionIcon({ action }: { action: CtaBandAction }) {
+  if (action.href?.startsWith("tel:")) return <Phone className="h-4 w-4" aria-hidden />;
+  if (action.href === SITE.whatsappHref) return <MessageCircle className="h-4 w-4" aria-hidden />;
+  return <ArrowRight className="h-4 w-4" aria-hidden />;
+}
+
 /**
- * Banda CTA finale condivisa dalle pagine. Tre varianti visive coordinate
- * con il sistema di sfondi a 3 livelli; i testi restano specifici per pagina.
+ * CTA finale di pagina — ibrida:
+ * - mobile (<sm): editoriale centrata, nessuna immagine caricata
+ *   (la foto è un background CSS sul blocco desktop, non scaricata da mobile);
+ * - desktop (sm+): fotografica piena con overlay blu.
  */
-export function CtaBand({ variant, title, text, image, actions }: Props) {
-  const acts: CtaBandAction[] = (
-    actions ?? [
-      { label: SITE.telefono, href: SITE.telefonoHref },
-      { label: "Contattaci", to: "/contatti" },
-    ]
-  ).filter((a): a is CtaBandAction => Boolean(a));
-
-  const sectionCls =
-    variant === "minimale"
-      ? "bg-blu-scuro text-white"
-      : "relative overflow-hidden bg-blu text-white";
-
+function CtaFinale({
+  eyebrow,
+  title,
+  text,
+  actions = [
+    { label: SITE.telefono, href: SITE.telefonoHref },
+    { label: "Scrivici su WhatsApp", href: SITE.whatsappHref },
+  ],
+  footer = true,
+}: Omit<CtaBandProps, "variant" | "framed">) {
+  const [primary, secondary] = actions;
   return (
-    <section className={sectionCls}>
-      {variant === "fotografica" && (
-        <>
-          <img
-            src={image ?? "/assets/sala-corsi-ampia.jpg"}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div aria-hidden="true" className="absolute inset-0 bg-blu/85" />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ background: "radial-gradient(circle at 80% 20%, hsl(204 68% 41% / 0.35) 0%, transparent 55%)" }}
-          />
-        </>
-      )}
-      {variant === "geometrica" && (
-        <>
-          {/* Bagliore azzurro laterale */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ background: "radial-gradient(circle at 20% 50%, rgba(34,121,176,0.35) 0%, transparent 55%)" }}
-          />
-          {/* Texture puntini scura su tutta la banda */}
-          <div aria-hidden="true" className="texture-dots-dark absolute inset-0 opacity-60" />
-          {/* Vitruviano identitario: stesso asset di PageHero; invert + screen
-              lo trasforma in tratti chiari sul fondo blu */}
-          <img
-            src="/assets/vitruviano-servizi-integrale.webp"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            className="pointer-events-none absolute -right-16 top-1/2 w-[300px] -translate-y-1/2 opacity-[0.16] invert mix-blend-screen sm:-right-8 sm:w-[420px] lg:right-0 lg:w-[520px] [mask-image:linear-gradient(to_left,black_55%,transparent_98%)]"
-          />
-        </>
-      )}
-      <div
-        className={
-          "container-fkt relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center " +
-          (variant === "minimale" ? "py-12" : "py-16")
-        }
-      >
-        <div>
-          <h2 className="text-2xl font-extrabold sm:text-3xl">{title}</h2>
-          {text ? <div className="mt-2 text-white/80">{text}</div> : null}
+    <>
+      {/* Mobile — editoriale centrata */}
+      <div className="border-t border-border pb-4 pt-12 text-center sm:hidden">
+        {eyebrow && (
+          <p className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.25em] text-azzurro">
+            <span className="pulse-dot" aria-hidden /> {eyebrow}
+          </p>
+        )}
+        <h2 className="mx-auto mt-4 max-w-md font-display text-3xl font-extrabold leading-[1.12] tracking-tight text-blu">
+          {title}
+        </h2>
+        {text && <p className="mx-auto mt-4 max-w-sm text-muted-foreground">{text}</p>}
+        <div className="mx-auto mt-7 flex max-w-xs flex-col gap-3">
+          {primary && (
+            <ActionLink
+              action={primary}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-azzurro px-7 py-3.5 font-semibold text-white shadow-fkt-2 transition-colors hover:bg-blu"
+            >
+              <ActionIcon action={primary} />
+              {primary.label}
+            </ActionLink>
+          )}
+          {secondary && (
+            <ActionLink
+              action={secondary}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-semibold text-blu ring-1 ring-border transition-colors hover:bg-secondary"
+            >
+              <ActionIcon action={secondary} />
+              {secondary.label}
+            </ActionLink>
+          )}
         </div>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          {acts.map((a, i) => (
-            <Action key={a.label} action={a} primary={i === 0} />
-          ))}
+        {footer && (
+          <p className="mt-7 text-sm text-muted-foreground">
+            {SITE.orari} · {SITE.indirizzo.via}, {SITE.indirizzo.citta}
+          </p>
+        )}
+      </div>
+
+      {/* Desktop — fotografica piena con overlay */}
+      <div
+        className="relative hidden min-h-[460px] items-center overflow-hidden rounded-3xl shadow-fkt-3 sm:flex"
+        style={{
+          backgroundImage: "url(/assets/hero-sala-corsi.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-r from-blu/95 via-blu/60 to-transparent"
+        />
+        <div className="relative max-w-xl p-12">
+          {eyebrow && (
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-azzurro-chiaro">
+              {eyebrow}
+            </p>
+          )}
+          <h2 className="h-section mt-3 font-extrabold text-white">{title}</h2>
+          {text && <p className="mt-4 text-white/80 sm:text-lg">{text}</p>}
+          <div className="mt-7 flex flex-wrap gap-3">
+            {primary && (
+              <ActionLink
+                action={primary}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blu transition-colors hover:bg-azzurro hover:text-white"
+              >
+                <ActionIcon action={primary} />
+                {primary.label}
+              </ActionLink>
+            )}
+            {secondary && (
+              <ActionLink
+                action={secondary}
+                className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                <ActionIcon action={secondary} />
+                {secondary.label}
+              </ActionLink>
+            )}
+          </div>
+          {footer && (
+            <p className="mt-8 flex flex-wrap gap-x-6 gap-y-1 text-sm text-white/70">
+              <span className="inline-flex items-center gap-2">
+                <Clock className="h-4 w-4 text-azzurro-chiaro" aria-hidden /> {SITE.orari}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-azzurro-chiaro" aria-hidden /> {SITE.indirizzo.via},{" "}
+                {SITE.indirizzo.citta}
+              </span>
+            </p>
+          )}
         </div>
       </div>
+    </>
+  );
+}
+
+/** Card contestuale — richiamo compatto da inserire dentro i contenuti. */
+function CtaCard({
+  title,
+  text,
+  actions = [{ label: "Prenota una valutazione", href: SITE.telefonoHref }],
+  icon: Icon = CalendarCheck,
+}: Omit<CtaBandProps, "variant" | "framed">) {
+  const [primary, secondary] = actions;
+  return (
+    <div className="rounded-2xl border-l-4 border-azzurro bg-azzurro/5 p-6 sm:flex sm:items-center sm:gap-6 sm:p-7">
+      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-azzurro text-white max-sm:mb-4">
+        <Icon className="h-5 w-5" aria-hidden />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h3 className="font-display text-lg font-bold text-blu">{title}</h3>
+        {text && <p className="mt-1 text-sm text-muted-foreground">{text}</p>}
+      </div>
+      <div className="flex shrink-0 flex-wrap items-center gap-3 max-sm:mt-4 max-sm:flex-col max-sm:items-stretch">
+        {primary && (
+          <ActionLink
+            action={primary}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-blu px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-azzurro"
+          >
+            {primary.label} <ArrowRight className="h-4 w-4" aria-hidden />
+          </ActionLink>
+        )}
+        {secondary && (
+          <ActionLink
+            action={secondary}
+            className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-blu transition-colors hover:bg-azzurro/10"
+          >
+            {secondary.label}
+          </ActionLink>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function CtaBand({ variant = "finale", framed = true, ...props }: CtaBandProps) {
+  const content = variant === "card" ? <CtaCard {...props} /> : <CtaFinale {...props} />;
+  if (!framed) return content;
+  return (
+    <section className="pb-20 pt-4">
+      <div className="container-fkt">{content}</div>
     </section>
   );
 }
