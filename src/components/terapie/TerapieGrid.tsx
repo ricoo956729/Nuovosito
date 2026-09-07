@@ -47,7 +47,32 @@ export function TerapieGrid({ trattamenti, immagineArea }: Props) {
   return (
     <>
       {/* Grid compatta */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      {/* Lista compatta — solo mobile: righe con miniatura, aprono la stessa modale */}
+      <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl bg-white shadow-fkt-1 ring-1 ring-border sm:hidden">
+        {trattamenti.map((t, idx) => (
+          <button
+            key={t.titolo}
+            type="button"
+            onClick={() => handleOpen(idx)}
+            className="flex w-full items-center gap-3 px-3 py-3 text-left transition-colors duration-200 hover:bg-secondary/50 active:bg-secondary"
+          >
+            <img
+              src={t.immagine ?? immagineArea}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-14 w-14 shrink-0 rounded-xl object-cover"
+            />
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-sm font-semibold text-blu">{t.titolo}</span>
+              <span className="mt-0.5 block truncate text-xs text-muted-foreground">{t.descrizione}</span>
+            </span>
+            <Plus className="h-4 w-4 shrink-0 text-azzurro" aria-hidden />
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-8 hidden grid-cols-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {trattamenti.map((t, idx) => {
           const isOpen = openIndex === idx;
 
