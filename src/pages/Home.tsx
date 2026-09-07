@@ -1,7 +1,7 @@
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { Link } from "react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Phone, MessageCircle, ArrowRight, MapPin, Clock } from "lucide-react";
+import { Phone, MessageCircle, ArrowRight, MapPin, Clock, Star } from "lucide-react";
 import { SITE, AREE_SERVIZI, CONVENZIONI } from "@/lib/site-data";
 import { NumeriDelCentro } from "@/sections/NumeriDelCentro";
 import { Recensioni } from "@/sections/Recensioni";
@@ -16,49 +16,49 @@ export default function Home() {
   });
   const heroImageY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
 
+  // Foto della sala come background CSS: la mask dissolve il bordo sinistro
+  // nel fondo ghiaccio; scale-110 (applicata al wrapper motion) dà margine
+  // al parallasse senza scoprire i bordi.
+  const heroBgStyle: CSSProperties = {
+    backgroundImage: "url(/assets/hero-sala-corsi.webp)",
+    backgroundSize: "cover",
+    backgroundPosition: "center 40%",
+    maskImage: "linear-gradient(to right, transparent, black 42%)",
+    WebkitMaskImage: "linear-gradient(to right, transparent, black 42%)",
+  };
+
   return (
     <>
       <Seo title="FKT Matera | Fisioterapia e rieducazione funzionale" description="Ambulatorio di fisioterapia e rieducazione funzionale a Matera dal 1995. Percorsi personalizzati per dolore, recupero del movimento e prestazioni fisiatriche." />
-      {/* HERO full-width — sfondo astratto premium */}
+      {/* HERO — la foto reale della sala corsi come elemento di punta.
+          Desktop: immagine full-height a destra, fusa nel fondo ghiaccio via
+          mask-image (background su div: con display:none sotto sm NON viene
+          scaricata, a differenza di <img hidden>). Mobile: card fotografica
+          sotto il testo. Parallasse leggero via framer-motion, disattivato
+          con prefers-reduced-motion. Badge recensioni in vetro sopra la foto. */}
       <section ref={heroRef} className="relative overflow-hidden bg-ghiaccio">
-        {/* sfondo astratto: solo desktop, con parallasse leggero (disattivato se prefers-reduced-motion) */}
+        {/* Immagine desktop: full-bleed a destra, bordo sinistro dissolto */}
         {reduceMotion ? (
-          <img
-            src="/assets/hero-bg-premium.jpg"
-            alt=""
-            width="1920"
-            height="1080"
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 hidden h-full w-full object-cover object-center sm:block"
+          <div
+            aria-hidden
+            className="absolute inset-y-0 right-0 hidden w-[56%] sm:block"
+            style={heroBgStyle}
           />
         ) : (
           <motion.div
-            className="absolute inset-0 hidden sm:block"
+            aria-hidden
+            className="absolute inset-y-0 right-0 hidden w-[56%] sm:block"
             style={{ y: heroImageY }}
           >
-            <img
-              src="/assets/hero-bg-premium.jpg"
-              alt=""
-              width="1920"
-              height="1080"
-              fetchPriority="high"
-              decoding="async"
-              className="h-full w-full scale-110 object-cover object-center"
-            />
+            <div className="h-full w-full scale-110" style={heroBgStyle} />
           </motion.div>
         )}
-        {/* Overlay direzionale: copre il lato del testo, lascia visibile la foto a destra */}
+        {/* Velo di fusione: garantisce la leggibilità del testo e ammorbidisce il taglio */}
         <div
           aria-hidden
-          className="absolute inset-0 hidden bg-gradient-to-r from-[#f2f7fa] from-45% via-[#f2f7fa]/80 via-60% to-transparent sm:block"
+          className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ghiaccio via-ghiaccio/50 to-transparent to-45% sm:block"
         />
-        {/* Gradient bottom ridotto: morbida transizione verso la sezione successiva */}
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 hidden h-20 bg-gradient-to-t from-[#f2f7fa] to-transparent sm:block"
-        />
-        {/* Pattern onda mobile — sostituisce cerchi generici */}
+        {/* Bagliore azzurro decorativo, angolo alto a destra (solo mobile) */}
         <div
           aria-hidden
           className="pointer-events-none absolute -top-10 -right-10 w-[300px] h-[300px] opacity-20 sm:hidden"
@@ -66,28 +66,61 @@ export default function Home() {
             background: 'radial-gradient(circle at 30% 30%, rgba(34,121,176,0.15) 0%, transparent 70%)'
           }}
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 w-full h-24 sm:hidden"
-          style={{
-            background: 'linear-gradient(to top, rgba(242,247,250,1) 0%, transparent 100%)'
-          }}
-        />
 
-        <div className="relative container-fkt flex min-h-[80vh] sm:min-h-[78vh] flex-col justify-center py-14 sm:py-20">
-          <div className="max-w-xl">
-            <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-azzurro">
+        {/* Badge recensioni in vetro, sopra la foto (solo desktop) */}
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
+          className="absolute bottom-10 right-8 hidden sm:block lg:right-14"
+        >
+          <div className="rounded-2xl bg-white/85 px-5 py-4 shadow-fkt-3 ring-1 ring-white/70 backdrop-blur">
+            <div className="flex items-center gap-1" role="img" aria-label="Valutazione 4,8 su 5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden />
+              ))}
+            </div>
+            <p className="mt-2 font-[Manrope] text-xl font-extrabold leading-none text-blu">
+              4,8<span className="text-sm font-bold text-muted-foreground">/5</span>
+            </p>
+            <p className="mt-1 text-xs font-medium text-muted-foreground">recensioni Google</p>
+          </div>
+        </motion.div>
+
+        <div className="relative container-fkt flex flex-col justify-center pb-14 pt-0 sm:min-h-[86vh] sm:py-20">
+          {/* Banner fotografico in cima, full-bleed (solo mobile) */}
+          <div className="relative -mx-4 order-first sm:hidden">
+            <div className="h-[30vh] min-h-[220px] overflow-hidden">
+              <img
+              src="/assets/hero-sala-corsi-mobile.webp"
+              alt="La sala corsi del centro FKT: tappetini blu e attrezzature per la rieducazione funzionale"
+              width="1080"
+              height="810"
+              fetchPriority="high"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+            </div>
+            <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+          </div>
+
+          {/* Card testuale che si sovrappone al banner (solo mobile).
+              Su mobile: compatta, senza label e senza badge recensioni
+              (richiesto per ridurre l'ingombro). Su sm+ torna testo libero. */}
+          <div className="relative z-10 -mt-12 max-w-xl rounded-3xl bg-white p-5 shadow-fkt-3 ring-1 ring-border sm:mt-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:ring-0">
+            <span className="hidden items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.25em] text-azzurro sm:inline-flex">
+              <span aria-hidden className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-azzurro" />
               Fisioterapia a Matera dal {SITE.dal}
             </span>
-            <h1 className="mt-6 h-display font-extrabold leading-[1.1] tracking-tight text-blu">
+            <h1 className="h-display font-extrabold leading-[1.1] tracking-tight text-blu sm:mt-6">
               Il movimento è la cura.{" "}
               <span className="text-azzurro">Noi ti rimettiamo in moto.</span>
             </h1>
-            <p className="mt-6 text-lg text-foreground/70">{SITE.descrizione}</p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <p className="mt-3 text-base text-foreground/70 sm:mt-6 sm:text-lg">{SITE.descrizione}</p>
+            <div className="mt-5 flex flex-wrap gap-3 sm:mt-9">
               <a
                 href={SITE.telefonoHref}
-                className="inline-flex items-center gap-2 rounded-full bg-azzurro px-7 py-3.5 font-semibold text-white shadow-lg shadow-azzurro/30 transition hover:brightness-110"
+                className="inline-flex items-center gap-2 rounded-full bg-azzurro px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-azzurro/30 transition hover:brightness-110 sm:px-7 sm:py-3.5 sm:text-base"
               >
                 <Phone className="h-4 w-4" /> Prenota una valutazione
               </a>
@@ -95,15 +128,23 @@ export default function Home() {
                 href={SITE.whatsappHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-white/80 px-7 py-3.5 font-semibold text-blu shadow-sm ring-1 ring-border backdrop-blur transition hover:bg-white"
+                className="inline-flex items-center gap-2 rounded-full bg-white/80 px-6 py-3 text-sm font-semibold text-blu shadow-sm ring-1 ring-border backdrop-blur transition hover:bg-white sm:px-7 sm:py-3.5 sm:text-base"
               >
                 <MessageCircle className="h-4 w-4 text-azzurro" /> Scrivici su WhatsApp
               </a>
             </div>
-            <p className="mt-8 text-sm font-medium text-muted-foreground">
-              {SITE.indirizzo.via}, {SITE.indirizzo.citta} · {SITE.orari}
+            <p className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm font-medium text-muted-foreground sm:mt-8">
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 text-azzurro" aria-hidden />
+                {SITE.indirizzo.via}, {SITE.indirizzo.citta}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="h-4 w-4 text-azzurro" aria-hidden />
+                {SITE.orari}
+              </span>
             </p>
           </div>
+
         </div>
       </section>
 
