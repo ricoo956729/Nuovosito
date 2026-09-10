@@ -9,6 +9,8 @@ import Contatti from "@/pages/Contatti";
 import LavoraConNoi from "@/pages/LavoraConNoi";
 import Articoli from "@/pages/Articoli";
 import ArticoloTecarterapia from "@/pages/ArticoloTecarterapia";
+import Privacy from "@/pages/Privacy";
+import CookiePolicy from "@/pages/CookiePolicy";
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
         <Route path="lavora-con-noi" element={<LavoraConNoi />} />
         <Route path="articoli" element={<Articoli />} />
         <Route path="articoli/tecarterapia-cos-e-benefici-quando-utile" element={<ArticoloTecarterapia />} />
+        <Route path="privacy" element={<Privacy />} />
+        <Route path="cookie-policy" element={<CookiePolicy />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
       </Routes>

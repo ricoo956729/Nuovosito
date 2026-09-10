@@ -116,11 +116,21 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-fkt py-5 text-xs text-white/40 flex flex-wrap gap-2 justify-between">
-          <span>
-            © {new Date().getFullYear()} {SITE.nomeEsteso} — Matera
-          </span>
-          <span>Fisioterapia e rieducazione funzionale dal {SITE.dal}</span>
+        <div className="container-fkt py-5 text-xs text-white/40">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 justify-between">
+            <span>
+              © {new Date().getFullYear()} {SITE.legale.ragioneSociale} — P.IVA {SITE.legale.pIva} —{" "}
+              {SITE.legale.sedeLegale}
+            </span>
+            <span className="flex flex-wrap items-center gap-x-5 gap-y-1">
+              <Link to="/privacy" className="hover:text-white transition-colors duration-200">
+                Privacy Policy
+              </Link>
+              <Link to="/cookie-policy" className="hover:text-white transition-colors duration-200">
+                Cookie Policy
+              </Link>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

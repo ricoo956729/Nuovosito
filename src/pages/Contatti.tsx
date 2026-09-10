@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Phone, MessageCircle, Mail, MapPin, Clock, ExternalLink, Navigation } from "lucide-react";
+import { Phone, MessageCircle, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
 import { PageHero } from "@/components/PageHero";
@@ -11,49 +11,70 @@ const MAPS_URL =
 const MAPS_EMBED =
   "https://www.google.com/maps?q=Vico%20dei%20Peuceti%2022%2C%2075100%20Matera&output=embed";
 
-/** Mappa con fallback elegante: se l'embed non si carica, resta una card curata con CTA a Google Maps. */
+/**
+ * Mappa con consenso GDPR: l'iframe di Google Maps si carica solo dopo il
+ * consenso ai cookie "marketing" via Cookiebot. Senza consenso resta un
+ * riquadro neutro con la possibilità di modificare le preferenze.
+ */
 function MappaSede() {
+  const [consenso, setConsenso] = useState(false);
   const [caricata, setCaricata] = useState(false);
   const [fallita, setFallita] = useState(false);
 
   useEffect(() => {
-    if (caricata) return;
+    const check = () => setConsenso(Boolean(window.Cookiebot?.consent?.marketing));
+    check();
+    window.addEventListener("CookiebotOnConsentReady", check);
+    return () => window.removeEventListener("CookiebotOnConsentReady", check);
+  }, []);
+
+  useEffect(() => {
+    if (caricata || !consenso) return;
     const timer = setTimeout(() => setFallita(true), 8000);
     return () => clearTimeout(timer);
-  }, [caricata]);
+  }, [caricata, consenso]);
 
   return (
     <div className="relative mt-6 h-[400px] overflow-hidden rounded-3xl shadow-xl ring-1 ring-border">
-      {/* Fallback visivo sotto l'iframe */}
-      <div className="absolute inset-0">
-        <img
-          src="/assets/sede-ingresso.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-blu/80" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center text-white">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/25">
-            <Navigation className="h-5 w-5" />
+      {/* Riquadro neutro finché manca il consenso o l'embed non è caricabile */}
+      {(!consenso || !caricata || fallita) && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-ghiaccio px-6 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blu/5 ring-1 ring-border">
+            <MapPin className="h-5 w-5 text-blu/50" />
           </span>
-          <p className="text-lg font-extrabold font-[Manrope]">
-            {SITE.indirizzo.via}, {SITE.indirizzo.cap} {SITE.indirizzo.citta} ({SITE.indirizzo.provincia})
-          </p>
-          <p className="text-sm text-white/70">La mappa interattiva non è disponibile in questo momento.</p>
-          <a
-            href={MAPS_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-blu transition hover:bg-azzurro hover:text-white"
-          >
-            Apri su Google Maps <ExternalLink className="h-4 w-4" />
-          </a>
+          {fallita ? (
+            <>
+              <p className="text-sm text-muted-foreground">
+                La mappa interattiva non è disponibile in questo momento.
+              </p>
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-blu px-6 py-3 text-sm font-semibold text-white transition hover:bg-azzurro"
+              >
+                Apri su Google Maps <ExternalLink className="h-4 w-4" />
+              </a>
+            </>
+          ) : !consenso ? (
+            <>
+              <p className="max-w-sm text-sm text-muted-foreground">
+                La mappa interattiva si attiva solo con il consenso ai cookie di terze parti.
+              </p>
+              <button
+                type="button"
+                onClick={() => window.Cookiebot?.renew?.()}
+                className="inline-flex items-center gap-2 rounded-full bg-blu px-6 py-3 text-sm font-semibold text-white transition hover:bg-azzurro"
+              >
+                Gestisci consenso e mostra la mappa
+              </button>
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">Caricamento mappa…</p>
+          )}
         </div>
-      </div>
-      {!fallita && (
+      )}
+      {consenso && !fallita && (
         <iframe
           title="Mappa FKT Matera — Vico dei Peuceti 22, Matera"
           src={MAPS_EMBED}

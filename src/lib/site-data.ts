@@ -26,6 +26,13 @@ export const SITE = {
       "https://www.facebook.com/p/FKT-Ambulatorio-di-Fisiokinesiterapia-100063643672271/",
     instagram: "https://www.instagram.com/fisioterapiamatera/",
   },
+  legale: {
+    ragioneSociale: "F.K.T. S.A.S. di Teresa Canitano & C.",
+    pIva: "00658630777",
+    sedeLegale: "Via Firenze 59, 75014 Grassano (MT)",
+    dpo: "Intellimed S.r.l.s., Via Nino Rota 2/4, 75100 Matera — amministrazione@intellimed.it",
+    emailDiritti: "amministrazione@fisioterapiamatera.it",
+  },
   sito: "https://www.fisioterapiamatera.it",
 } as const;
 

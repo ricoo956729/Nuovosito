@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import { Mail, Send } from "lucide-react";
 import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
@@ -135,7 +136,17 @@ export default function LavoraConNoi() {
                 onChange={(e) => setPrivacy(e.target.checked)}
                 className="mt-1 h-4 w-4 rounded border-input accent-[#2279b0]"
               />
-              Autorizzo il Centro FKT a ricontattarmi ai recapiti indicati per questa richiesta. *
+              <span>
+                Ho letto l'
+                <Link
+                  to="/privacy"
+                  className="font-semibold text-azzurro underline-offset-2 hover:underline"
+                >
+                  informativa privacy
+                </Link>{" "}
+                e acconsento al trattamento dei miei dati personali per la gestione della
+                candidatura. *
+              </span>
             </label>
 
             <button
