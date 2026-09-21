@@ -15,8 +15,9 @@
         perPurposeConsent: true,
         askConsentAtCookiePolicyUpdate: true,
         floatingPreferencesButtonDisplay: "bottom-right",
-        floatingPreferencesButtonColor: "#082A4A",
-        floatingPreferencesButtonCaptionColor: "#FFFFFF",
+        // I colori del pulsante flottante non sono personalizzabili con il piano
+        // attuale (csFeatures.full_customization = false): iubenda li riporta
+        // comunque ai propri valori di default, quindi non li impostiamo.
         banner: {
           position: "float-bottom-center",
           backgroundOverlay: true,
@@ -27,14 +28,21 @@
           customizeButtonDisplay: true,
           rejectButtonDisplay: true,
           closeButtonRejects: true,
+          // ATTENZIONE: con il piano iubenda attuale la personalizzazione libera
+          // dei colori è disattivata (csFeatures.full_customization = false).
+          // Lo script accetta solo i valori della palette predefinita elencata
+          // qui sotto e silenziosamente riporta al default (testo bianco) ogni
+          // altro valore: i colori del brand rendevano il banner bianco su
+          // bianco, cioè illeggibile. Per usare i colori FKT serve un piano
+          // iubenda con "full customization".
           backgroundColor: "#FFFFFF",
-          textColor: "#102F4A",
-          acceptButtonColor: "#2279B0",
-          acceptButtonCaptionColor: "#FFFFFF",
-          rejectButtonColor: "#082A4A",
-          rejectButtonCaptionColor: "#FFFFFF",
-          customizeButtonColor: "#EEF3F0",
-          customizeButtonCaptionColor: "#082A4A",
+          textColor: "black",
+          acceptButtonColor: "#0073CE",
+          acceptButtonCaptionColor: "white",
+          rejectButtonColor: "#0073CE",
+          rejectButtonCaptionColor: "white",
+          customizeButtonColor: "#DADADA",
+          customizeButtonCaptionColor: "#4D4D4D",
         },
         callback: {
           // iubenda non emette eventi DOM: li rilanciamo noi così che i componenti
