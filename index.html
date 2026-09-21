@@ -3,14 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Cookiebot CMP: deve essere il primo script, blocca i contenuti di terze parti fino al consenso -->
-    <script
-      id="Cookiebot"
-      src="https://consent.cookiebot.com/uc.js"
-      data-cbid="a854b7ba-7720-4bde-a5a6-f8250877a176"
-      data-blockingmode="auto"
-      type="text/javascript"
-    ></script>
+    <!-- iubenda Cookie Solution: deve restare il primo script, blocca i contenuti di terze parti fino al consenso.
+         Configurazione inline (remote configuration disattivata) così da restare versionata nel repo.
+         Gli id corrispondono al sito iubenda "www.fisioterapiamatera.it" — vedi src/lib/iubenda.ts. -->
+    <script type="text/javascript">
+      var _iub = _iub || [];
+      _iub.csConfiguration = {
+        siteId: 4687832,
+        cookiePolicyId: 97812237,
+        lang: "it",
+        perPurposeConsent: true,
+        askConsentAtCookiePolicyUpdate: true,
+        floatingPreferencesButtonDisplay: "bottom-right",
+        floatingPreferencesButtonColor: "#082A4A",
+        floatingPreferencesButtonCaptionColor: "#FFFFFF",
+        banner: {
+          position: "float-bottom-center",
+          backgroundOverlay: true,
+          showTitle: false,
+          listPurposes: true,
+          explicitWithdrawal: true,
+          acceptButtonDisplay: true,
+          customizeButtonDisplay: true,
+          rejectButtonDisplay: true,
+          closeButtonRejects: true,
+          backgroundColor: "#FFFFFF",
+          textColor: "#102F4A",
+          acceptButtonColor: "#2279B0",
+          acceptButtonCaptionColor: "#FFFFFF",
+          rejectButtonColor: "#082A4A",
+          rejectButtonCaptionColor: "#FFFFFF",
+          customizeButtonColor: "#EEF3F0",
+          customizeButtonCaptionColor: "#082A4A",
+        },
+        callback: {
+          // iubenda non emette eventi DOM: li rilanciamo noi così che i componenti
+          // React possano reagire al consenso (vedi useConsensoIubenda in src/lib/iubenda.ts).
+          onPreferenceExpressedOrNotNeeded: function () {
+            window.dispatchEvent(new CustomEvent("iubenda:consenso"));
+          },
+          onPreferenceExpressed: function () {
+            window.dispatchEvent(new CustomEvent("iubenda:consenso"));
+          },
+        },
+      };
+    </script>
+    <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/4687832.js"></script>
+    <script type="text/javascript" src="https://cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
     <meta name="description" content="Ambulatorio di fisioterapia e rieducazione funzionale a Matera dal 1995. Percorsi personalizzati per dolore, recupero del movimento e prestazioni fisiatriche." />
     <title>FKT Matera | Fisioterapia e rieducazione funzionale</title>
     <!-- Font self-hosted (nessuna chiamata a Google Fonts) -->

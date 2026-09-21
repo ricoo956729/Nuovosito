@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
 import { NAV, SITE } from "@/lib/site-data";
+import { apriPreferenzeCookie } from "@/lib/iubenda";
 
 export function Footer() {
   return (
@@ -129,6 +130,13 @@ export function Footer() {
               <Link to="/cookie-policy" className="hover:text-white transition-colors duration-200">
                 Cookie Policy
               </Link>
+              <button
+                type="button"
+                onClick={apriPreferenzeCookie}
+                className="hover:text-white transition-colors duration-200"
+              >
+                Preferenze cookie
+              </button>
             </span>
           </div>
         </div>
