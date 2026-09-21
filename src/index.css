@@ -248,3 +248,21 @@ html {
     transform: none;
   }
 }
+
+/* Documenti legali iubenda incorporati (privacy e cookie policy).
+   Lo script di iubenda inietta markup e fogli di stile propri: qui si limita
+   la grafica di default perché il documento si integri nella pagina. */
+.iubenda-documento #iub-legalDoc {
+  /* Barra verde del tema iubenda: fuori palette rispetto al blu del sito */
+  border-top: 0;
+}
+
+/* L'intestazione del documento ripete il titolo gia presente nella PageHero */
+.iubenda-documento .main-header > h1 {
+  display: none;
+}
+
+.iubenda-documento #iub-legalDoc .container {
+  padding-left: 0;
+  padding-right: 0;
+}

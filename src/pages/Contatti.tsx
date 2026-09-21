@@ -4,6 +4,11 @@ import { SITE } from "@/lib/site-data";
 import { Seo } from "@/components/Seo";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import {
+  apriPreferenzeCookie,
+  IUBENDA_FINALITA_ESPERIENZA,
+  useConsensoIubenda,
+} from "@/lib/iubenda";
 
 
 const MAPS_URL =
@@ -13,20 +18,13 @@ const MAPS_EMBED =
 
 /**
  * Mappa con consenso GDPR: l'iframe di Google Maps si carica solo dopo il
- * consenso ai cookie "marketing" via Cookiebot. Senza consenso resta un
+ * consenso alla finalità "Esperienza" via iubenda. Senza consenso resta un
  * riquadro neutro con la possibilità di modificare le preferenze.
  */
 function MappaSede() {
-  const [consenso, setConsenso] = useState(false);
+  const consenso = useConsensoIubenda(IUBENDA_FINALITA_ESPERIENZA);
   const [caricata, setCaricata] = useState(false);
   const [fallita, setFallita] = useState(false);
-
-  useEffect(() => {
-    const check = () => setConsenso(Boolean(window.Cookiebot?.consent?.marketing));
-    check();
-    window.addEventListener("CookiebotOnConsentReady", check);
-    return () => window.removeEventListener("CookiebotOnConsentReady", check);
-  }, []);
 
   useEffect(() => {
     if (caricata || !consenso) return;
@@ -63,7 +61,7 @@ function MappaSede() {
               </p>
               <button
                 type="button"
-                onClick={() => window.Cookiebot?.renew?.()}
+                onClick={apriPreferenzeCookie}
                 className="inline-flex items-center gap-2 rounded-full bg-blu px-6 py-3 text-sm font-semibold text-white transition hover:bg-azzurro"
               >
                 Gestisci consenso e mostra la mappa
